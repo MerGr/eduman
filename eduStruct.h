@@ -30,4 +30,17 @@ typedef struct{
     int num_of_modules;
     module modules[7] ;
     float moy;
+}etudiant_info;
+
+
+typedef struct etudiant{
+    etudiant_info etud_info;
+    struct etudiant * suiv ;
+
 }etudiant;
+
+typedef struct{
+    etudiant * first;
+
+}liste_etudiants;
+

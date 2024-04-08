@@ -59,7 +59,7 @@ int generate_apogee(int an){
     return temp ;
 }
 
-void generate_academic_email(etudiant * etud){
+void generate_academic_email(etudiant_info * etud){
     char email[100] = "";
     char temp1[3];
     temp1[0]= etud->prenom[0];
@@ -74,13 +74,22 @@ void generate_academic_email(etudiant * etud){
     strcat(etud->academic_email , email);
 }
 
-void ajout_etudiant(etudiant *etud){
-    etudiant * p=etud;
+void calc_moy(etudiant_info *etud){
+    int n = etud->num_of_modules ;
+    float som = 0 ;
+    for(int i=0 ; i<n ; i++){
+        som+=etud->modules[i].module_note;
+    }
+    etud->moy = som/n ;
+}
+
+void ajout_etudiant_info(etudiant_info *etud){
+    etudiant_info * p=etud;
     int isValid=0 ;
-    printf(" Veuillez saisir le nom de l'etudiant : \n ");
+    printf(" Veuillez saisir le nom de l'etudiant_info : \n ");
     scanf(" %[^\n]s",&etud->nom);
     getchar() ;
-    printf(" Veuillez saisir le prenom de l'etudiant : \n ");
+    printf(" Veuillez saisir le prenom de l'etudiant_info : \n ");
     scanf(" %[^\n]s",&etud->prenom);
     getchar() ;
     while(isValid == 0){
@@ -161,17 +170,31 @@ void ajout_etudiant(etudiant *etud){
         } 
         isValid = 0;
     }
-    
-    printf(" \n etudiant ajoute avec succes. \n ");
+
+    calc_moy(etud);
+    printf(" \n etudiant_info ajoute avec succes. \n ");
+
+}
+
+//ajout de nouvel etudiant a la fin de la liste
+etudiant * ajout_fin(etudiant* debut){
+    etudiant*  new_etudiant=(etudiant *)malloc(sizeof(etudiant));
+    ajout_etudiant_info(&new_etudiant->etud_info );
+    new_etudiant->suiv = NULL;
+
+    etudiant* p=debut;
+
+    if(debut == NULL){
+        return new_etudiant;
+    }
+    else{
+        while(p->suiv != NULL){
+            p=p->suiv;
+        }
+    }
+    p->suiv=new_etudiant;
+    return debut;
 }
 
 
-
-
-
-int main(){
-    etudiant etud , *p=&etud;
-    ajout_etudiant(p);
-    return 0;
-}
 
