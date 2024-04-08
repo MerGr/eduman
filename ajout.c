@@ -15,35 +15,13 @@ date saisir_date(void){
             printf(" Veuillez saisir le numero du mois : jan=1 ,feb=2 ,mar=3 ,apr=4 ,may=5 ,jun=6 ,jul=7 ,aug=8 ,sep=9 ,oct=10 ,nov=11 ,dec=12 \n ");
             scanf("%d",&temp.mois);
             getchar() ;
-            switch(temp.mois){
-            case jan : isValid = 1 ;
-            break;
-            case feb : isValid = 1 ;
-            break;
-            case mar : isValid = 1 ;
-            break;
-            case apr : isValid = 1 ;
-            break;
-            case may : isValid = 1 ;
-            break;
-            case jun : isValid = 1 ;
-            break;
-            case jul : isValid = 1 ;
-            break;
-            case aug : isValid = 1 ;
-            break;
-            case sep : isValid = 1 ;
-            break;
-            case oct : isValid = 1 ;
-            break;
-            case nov : isValid = 1 ;
-            break;
-            case dec : isValid = 1 ;
-            break;
-            default  : printf(" Error: invalide : \n"); 
-                    isValid = 0;
-
+             if(temp.mois<=0 || temp.mois>12){
+                printf(" Error: invalide : \n"); 
+                isValid = 0;
             }
+            else{
+                isValid = 1 ;
+            }  
         }
         printf(" Veuillez saisir l'annee : \n ");
         scanf("%d",&temp.annee);
@@ -86,10 +64,10 @@ void calc_moy(etudiant_info *etud){
 void ajout_etudiant_info(etudiant_info *etud){
     etudiant_info * p=etud;
     int isValid=0 ;
-    printf(" Veuillez saisir le nom de l'etudiant_info : \n ");
+    printf(" Veuillez saisir le nom : \n ");
     scanf(" %[^\n]s",&etud->nom);
     getchar() ;
-    printf(" Veuillez saisir le prenom de l'etudiant_info : \n ");
+    printf(" Veuillez saisir le prenom  : \n ");
     scanf(" %[^\n]s",&etud->prenom);
     getchar() ;
     while(isValid == 0){
@@ -172,7 +150,7 @@ void ajout_etudiant_info(etudiant_info *etud){
     }
 
     calc_moy(etud);
-    printf(" \n etudiant_info ajoute avec succes. \n ");
+    printf(" \n etudiant ajoute avec succes. \n ");
 
 }
 
