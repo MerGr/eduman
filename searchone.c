@@ -7,15 +7,15 @@
  * ****************************************/
 
 #include "srchfuncs.h"
-
+#include "eduStruct.h"
 etudiant *searchoneByApo(etudiant *start, int targetApo){
    do{
-      if(start->apogee == targetApo)
+      if(start->etud_info.apogee == targetApo)
          return start;
       else{
-         if(start->next != NULL) start = start->next;
+         if(start->suiv != NULL) start = start->suiv;
       }
-   } while(start->next != NULL);
+   } while(start->suiv != NULL);
 
-   return start->next;
+   return start->suiv;
 }
