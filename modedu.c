@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 #include <time.h>
 #include <stdlib.h>
 #include "eduStruct.h"
 
 
 date saisir_date(void) ;
+etudiant *searchoneByApo(etudiant *, int ) ;
 
 //pour que l'utilisateur recupere l'id de chaque module
 void show_modules_info(etudiant_info* etud){
@@ -146,37 +146,16 @@ void modifier_etudiant(etudiant_info* etud){
     }
 }
 
-int recherch_etud(etudiant* debut , int apog){
-    int existe=0 , pos=1 ;
-    etudiant* p=debut;
-    while(p != NULL){
-        if( p->etud_info.apogee == apog){
-            existe = 1 ;
-            break ;
-        }
-        p=p->suiv;
-        pos++ ;
-    }
-    if(existe == 0){
-        return 0 ;
-    }
-    else{
-        return pos;
-    }
-}
-
 etudiant * modifier_etud_info(etudiant* debut , int apog){
-    int existe=0 , pos=1 ;
+    etudiant* temp = searchoneByApo(debut,apog) ;
     etudiant* p=debut;
-    existe = recherch_etud(debut,apog) ;
 
-    if(existe == 0){
+    if(temp == NULL){
         printf(" \n Il n'existe pas d'eutudiant correspondant à ce numero d'apogee \n");
     }
     else{
-        while(pos != existe){
+        while(p != temp){
             p=p->suiv ;
-            pos++ ;
         }
         modifier_etudiant(&p->etud_info);
     }
@@ -184,25 +163,3 @@ etudiant * modifier_etud_info(etudiant* debut , int apog){
     return debut;
 }
 
-etudiant * delete_etud(etudiant* debut , int apog){
-    
-    int existe=0 , pos=1 ;
-    etudiant *p=debut  , *Q;
-    existe = recherch_etud(debut,apog) ;
-
-    if(existe == 0){
-        printf(" \n Il n'existe pas d'eutudiant correspondant à ce numero d'apogee \n");
-    }
-    else{
-        while(p != NULL){
-            Q=p;
-            p=p->suiv ;
-            pos++ ;
-            if(pos == existe){
-                Q->suiv = p->suiv ;
-                free(p);
-            }
-        }  
-    }
-    return debut;
-}
