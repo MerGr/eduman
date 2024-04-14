@@ -1,6 +1,7 @@
 #pragma once
 #include <stdio.h>
 
+typedef enum yORn {no, yes} yORn;
 typedef enum e_filiere { SMI=1 , SMA , SMP ,SMC , SVI ,STU} e_filiere ;
 typedef enum Mois { jan = 1 ,feb ,mar ,apr ,may ,jun ,jul ,aug ,sep ,oct ,nov ,dec } Mois;
 typedef enum e_genre { F =1 , H } e_genre;
@@ -44,11 +45,6 @@ typedef struct{
     etudiant * first;
 
 }liste_etudiants;
-
-typedef struct sortd{
-   etudiant_info stdnt;
-   struct sortd *suiv;
-}sortd;
 
 
 

@@ -5,10 +5,15 @@
  *
  * *********************************/
 #include "eduStruct.h"
+
 etudiant *searchoneByApo(etudiant *, int);
 
-sortd *srchByNom(etudiant *, char *);
+etudiant *srchByNom(etudiant *, char *);
 
-sortd *srchByPrenom(etudiant *, char *);
+etudiant *srchByPrenom(etudiant *, char *);
 
-sortd *srchByDate(etudiant *, date);
+etudiant *srchByDate(etudiant *, date);
+
+etudiant *validlist(etudiant *);
+
+etudiant *filierelist(etudiant *, e_filiere);
