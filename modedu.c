@@ -3,10 +3,9 @@
 #include <time.h>
 #include <stdlib.h>
 #include "eduStruct.h"
+#include "srchfuncs.h"
+#include "ajoutfuncs.h"
 
-
-date saisir_date(void) ;
-etudiant *searchoneByApo(etudiant *, int ) ;
 
 //pour que l'utilisateur recupere l'id de chaque module
 void show_modules_info(etudiant_info* etud){
