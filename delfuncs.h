@@ -1,3 +1,3 @@
 #include "eduStruct.h"
 
-etudiant * delete_etud(etudiant*  , int );
+extern void delete_etud(etudiant *, int );

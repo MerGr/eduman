@@ -1,8 +1,8 @@
 #include "eduStruct.h"
 
-etudiant * sort_apogee(etudiant* );
+extern etudiant *sort_apogee(etudiant *);
 
-etudiant * sort_moy(etudiant* );
+extern etudiant *sort_moy(etudiant *);
 
-etudiant * sort_date_inscription(etudiant* );
+extern etudiant *sort_date_inscription(etudiant *);
 

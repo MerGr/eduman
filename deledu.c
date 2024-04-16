@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "eduStruct.h"
 #include "srchfuncs.h"
 
-etudiant * delete_etud(etudiant* debut , int apog){
+void delete_etud(etudiant* debut , int apog){
     etudiant* temp = searchoneByApo(debut,apog) ;
     etudiant *p=debut  , *Q;
 
@@ -17,10 +18,6 @@ etudiant * delete_etud(etudiant* debut , int apog){
                 Q->suiv = p->suiv ;
                 free(p);
             }
-        }  
+        }
     }
-    return debut;
 }
-
-
-

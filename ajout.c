@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 #include <time.h>
 #include <stdlib.h>
 #include "eduStruct.h"
@@ -9,19 +8,19 @@ date saisir_date(void){
     date temp;
     int isValid = 0 ;
         printf(" Veuillez saisir le jour : \n ");
-        scanf("%d",&temp.jour);
+        scanf("%u",&temp.jour);
         getchar() ;
         while(isValid == 0){
             printf(" Veuillez saisir le numero du mois : jan=1 ,feb=2 ,mar=3 ,apr=4 ,may=5 ,jun=6 ,jul=7 ,aug=8 ,sep=9 ,oct=10 ,nov=11 ,dec=12 \n ");
-            scanf("%d",&temp.mois);
+            scanf("%d",(int *)&temp.mois);
             getchar() ;
              if(temp.mois<=0 || temp.mois>12){
-                printf(" Error: invalide : \n"); 
+                printf(" Error: invalide : \n");
                 isValid = 0;
             }
             else{
                 isValid = 1 ;
-            }  
+            }
         }
         printf(" Veuillez saisir l'annee : \n ");
         scanf("%d",&temp.annee);
@@ -31,8 +30,8 @@ date saisir_date(void){
 
 int generate_apogee(int an){
     int temp = (an % 100) * 100000 ;
-    srand(time(NULL)); 
-    
+    srand(time(NULL));
+
     temp += (rand() % (10) )*10000 + (rand() % (10))*1000 + (rand() % (10))*100 + (rand() % (10))*10 + rand() % (10) ;
     return temp ;
 }
@@ -46,7 +45,7 @@ void generate_academic_email(etudiant_info * etud){
     strcat(email , etud->nom);
     int temp = etud->apogee % 1000 ;
     char temp_string[5] ;
-    itoa(temp , temp_string ,10);
+    snprintf(temp_string, 5, "%d", temp);
     strcat(email , temp_string);
     strcat(email ,"@eduman.edu");
     strcat(etud->academic_email , email);
@@ -65,29 +64,29 @@ void ajout_etudiant_info(etudiant_info *etud){
     etudiant_info * p=etud;
     int isValid=0 ;
     printf(" Veuillez saisir le nom : \n ");
-    scanf(" %[^\n]s",&etud->nom);
+    scanf(" %[^\n]s",etud->nom);
     getchar() ;
     printf(" Veuillez saisir le prenom  : \n ");
-    scanf(" %[^\n]s",&etud->prenom);
+    scanf(" %[^\n]s",etud->prenom);
     getchar() ;
     while(isValid == 0){
         printf(" Veuillez saisir le genre :  1 = femme , 2 = homme : \n ");
-        scanf("%d",&etud->genre);
+        scanf("%d",(int *)&etud->genre);
         switch(etud->genre){
         case F : isValid = 1 ;
         break;
         case H : isValid = 1 ;
         break;
         default  : printf(" Error: invalide : \n");
-                isValid == 0 ;
+                isValid = 0 ;
 
         }
     }
-    
+
     isValid = 0 ;
     while(isValid == 0){
         printf(" Veuillez saisir la filiere : SMI=1 / SMA=2 / SMC=3 / SMP=4 / SVI=5 / STU=6 \n ");
-        scanf("%d",&etud->filiere);
+        scanf("%d",(int *)&etud->filiere);
         getchar() ;
         switch(etud->filiere){
         case SMI : isValid = 1 ;
@@ -102,8 +101,8 @@ void ajout_etudiant_info(etudiant_info *etud){
         break;
         case STU : isValid = 1 ;
         break;
-        default  : printf(" Error: invalide : \n"); 
-        isValid == 0  ;
+        default  : printf(" Error: invalide : \n");
+        isValid = 0  ;
     }
     }
     printf(" Veuillez saisir la date d'inscription  : \n ");
@@ -120,7 +119,7 @@ void ajout_etudiant_info(etudiant_info *etud){
         getchar() ;
         if(etud->num_of_modules<= 0 || etud->num_of_modules > 7){
             printf(" Error: le nombre de modules par semestre ne doit pas depasser 7\n");
-            isValid == 0;
+            isValid = 0;
         }
         else{
             isValid = 1;
@@ -130,7 +129,7 @@ void ajout_etudiant_info(etudiant_info *etud){
     printf("Veuillez enter les informations de chaque module : \n");
     for(int i=0 ; i<etud->num_of_modules ; i++){
         printf(" Veuillez saisir le nom du module: %d \n " ,i+1);
-        scanf(" %[^\n]s",&etud->modules[i].module_name);
+        scanf(" %[^\n]s",etud->modules[i].module_name);
         getchar() ;
 
         isValid = 0;
@@ -145,8 +144,12 @@ void ajout_etudiant_info(etudiant_info *etud){
             else{
                 isValid = 1 ;
             }
-        } 
+        }
         isValid = 0;
+    }
+    for(int i=etud->num_of_modules; i<7; i++){
+        strcpy(etud->modules[i].module_name, "NaN");
+        etud->modules[i].module_note = 0.0;
     }
 
     calc_moy(etud);
@@ -173,6 +176,3 @@ etudiant * ajout_fin(etudiant* debut){
     p->suiv=new_etudiant;
     return debut;
 }
-
-
-

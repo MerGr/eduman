@@ -6,9 +6,9 @@
  * *********************************/
 #include "eduStruct.h"
 
-void fdraw_line(FILE *, int);
-void write_to_file(FILE *, etudiant *);
+extern void fdraw_line(FILE *, int);
+extern void write_to_file(FILE *, etudiant *);
 
-void create(char *, etudiant *);
-void readline(char *, yORn, etudiant *, yORn);
-void modfile(char *, etudiant *);
+extern void create(char *, etudiant *);
+extern void readfile(char *, boolean, etudiant *, boolean);
+extern void modfile(char *, etudiant *);

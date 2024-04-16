@@ -6,14 +6,14 @@
  * *********************************/
 #include "eduStruct.h"
 
-etudiant *searchoneByApo(etudiant *, int);
+extern etudiant *searchoneByApo(etudiant *, int);
 
-etudiant *srchByNom(etudiant *, char *);
+extern etudiant *srchByNom(etudiant *, char *);
 
-etudiant *srchByPrenom(etudiant *, char *);
+extern etudiant *srchByPrenom(etudiant *, char *);
 
-etudiant *srchByDate(etudiant *, date);
+extern etudiant *srchByDate(etudiant *, date);
 
-etudiant *validlist(etudiant *);
+extern etudiant *validlist(etudiant *);
 
-etudiant *filierelist(etudiant *, e_filiere);
+extern etudiant *filierelist(etudiant *, e_filiere);
