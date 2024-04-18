@@ -4,10 +4,11 @@
 
 ### Install/Usage
 
-clone repository with :
+clone repository, make and run with :
 
 ```
 git clone https://github.com/MerGr/eduman.git
+cd eduman/
 make
 cd bin/
 ./eduman
