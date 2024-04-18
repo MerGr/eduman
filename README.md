@@ -6,7 +6,7 @@
 
 clone repository, make and run with :
 
-```
+```bash
 git clone https://github.com/MerGr/eduman.git
 cd eduman/
 make
