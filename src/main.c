@@ -11,13 +11,14 @@
 
 int main(){
    etudiant *student_list, *srchtarget, *sortd;
-   char srchstr[50]; 
-   unsigned int apo, edunum, option[2];
+   char srchstr[50];
+   unsigned int apo, edunum, option[3];
    date targetdate;
    e_filiere targetfil;
 
    student_list = NULL; //INIT
 
+   FILE *mainlistfile;
 
    do{
       menu(option);
@@ -35,7 +36,7 @@ int main(){
                      break;
                   }
 
-                  break;
+                  if(student_list) break;
                case 5: //Rechercher
                   if(student_list){
                      option[2] = searchselect();
@@ -73,7 +74,7 @@ int main(){
                      }
                   }
 
-                  break;
+                  if(student_list) break;
                case 4: //Tri
                   if(student_list){
                      option[2]=sortselect();
@@ -96,7 +97,7 @@ int main(){
                      }
                   }
 
-                  break;
+                  if(student_list) break;
                case 3: //Consultation
                   if(student_list){
                      option[2]=viewselect();
@@ -111,7 +112,7 @@ int main(){
 
                            break;
                         case 3:
-                           targetfil = filselect(student_list);
+                           targetfil = filselect();
                            sortd = filierelist(student_list, targetfil);
                            if(!sortd) printf("Aucun etudiant dans la filiere specifie a ete trouve !\n");
                            else draw_table(sortd);
@@ -120,7 +121,7 @@ int main(){
                      }
                   }
 
-                  break;
+                  if(student_list) break;
                case 2: //Modification
                   if(student_list){
                      printf("Numero Apogee d'etudiant : ");
@@ -131,7 +132,7 @@ int main(){
                      break;
                   }
 
-                  break;
+                  if(student_list) break;
                case 1: //Creation
                   printf("Nombre d'etudiants : ");
                   scanf("%u", &edunum);
@@ -139,17 +140,19 @@ int main(){
                      student_list = ajout_fin(student_list);
                   }
 
-                  break;
+                  if(student_list) break;
                case 0: //Retour
                   menu(option);
                   break;
             } break;
-         
+
          case 2: //Mode fichiers
-            FILE *mainlistfile;
             mainlistfile = fopen("list.txt", "r");
-            if(ferror(mainlistfile)) printf("Fichier list.txt introuvable ! Veuillez creer une base de donnees !\n"); 
-            else readfile("list", 0, student_list, 1);
+            if(mainlistfile == NULL) printf("Fichier list.txt introuvable ! Veuillez creer une base de donnees !\n");
+            else {
+               readfile("list", 0, student_list, 1);
+               printf("list.txt importe !\n");
+            }
             switch(option[1]){
                case 6: //Supprimer Etudiant
                   if(student_list){
@@ -157,14 +160,14 @@ int main(){
                      scanf("%u", &apo);
                      delete_etud(student_list, apo);
                      if(!student_list) printf("Erreur !\n");
-                     else { 
+                     else {
                         printf("Etudiant Code Apogee %u supprime !\n", apo);
                         create("StudentList", student_list);
                      }
                      break;
                   }
 
-                  break;
+                  if(student_list) break;
                case 5: //Rechercher
                   if(student_list){
                      option[2] = searchselect();
@@ -175,7 +178,7 @@ int main(){
                            srchtarget = searchoneByApo(student_list, apo);
                            if(!(srchtarget)) {printf("%u pas trouve !\n", apo);}
                            else{
-                              snprintf(srchstr, 70, "%u", apo);
+                              snprintf(srchstr, 50, "%u", apo);
                               create(srchstr, srchtarget);
                               printf("%u.txt cree\n", apo);
                            }
@@ -213,7 +216,7 @@ int main(){
                      }
                   }
 
-                  break;
+                  if(student_list) break;
                case 4: //Tri
                   if(student_list){
                      option[2]=sortselect();
@@ -239,7 +242,7 @@ int main(){
                      }
                   }
 
-                  break;
+                  if(student_list) break;
                case 3: //Consultation
                   if(student_list){
                      option[2]=viewselect();
@@ -256,7 +259,7 @@ int main(){
                            }
                            break;
                         case 3:
-                           targetfil = filselect(student_list);
+                           targetfil = filselect();
                            sortd = filierelist(student_list, targetfil);
                            if(!sortd) printf("Aucun etudiant dans la filiere specifie a ete trouve !\n");
                            else{
@@ -292,14 +295,14 @@ int main(){
                      }
                   }
 
-                  break;
+                  if(student_list) break;
                case 2: //Modification
                   if(student_list){
                      modfile("list", student_list);
                      readfile("list", 1, NULL, 0);
                   }
 
-                  break;
+                  if(student_list) break;
                case 1: //Creation
 
                   printf("Nombre d'etudiants : ");
@@ -318,7 +321,7 @@ int main(){
                   menu(option);
             } break;
       }
-      if(!student_list) printf("ERREUR ! BASE DE DONNEES NON EXISTANTE");
+      if(!student_list && option[0] != 3) printf("ERREUR ! BASE DE DONNEES NON EXISTANTE");
    } while(option[0] != 3);
 
    return 0;

@@ -1,49 +1,49 @@
-OBJS	= ajout.o deledu.o edumantui.o edusearch.o modedu.o sortedu.o fxport.o main.o searchone.o
-SOURCE	= ajout.c deledu.c edumantui.c edusearch.c modedu.c sortedu.c fxport.c main.c searchone.c
-HEADER	= filemanip.h srchfuncs.h ajoutfuncs.h delfuncs.h eduStruct.h modfuncs.h sortfuncs.h tui.h
+OBJS	= obj/ajout.o obj/deledu.o obj/edumantui.o obj/edusearch.o obj/modedu.o obj/sortedu.o obj/fxport.o obj/main.o obj/searchone.o
+SOURCE	= src/ajout.c src/deledu.c src/edumantui.c src/edusearch.c src/modedu.c src/sortedu.c src/fxport.c src/main.c src/searchone.c
+HEADER	= src/filemanip.h src/srchfuncs.h src/ajoutfuncs.h src/delfuncs.h src/eduStruct.h src/modfuncs.h src/sortfuncs.h src/tui.h
 SRCDIR	:= src
 BUILDDIR := obj
 TARGETDIR := bin
-OUT	= eduman.out
+OUT	= ./$(TARGETDIR)/eduman
 FLAGS	= -g -c -Wall
 LFLAGS	=
 CC	= gcc
 
-all:	eduman.out
+all: directories $(OUT)
 
 directories:
 	@mkdir -p $(TARGETDIR)
 	@mkdir -p $(BUILDDIR)
 
-eduman.out: $(OBJS)
+$(OUT): $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
 
-ajout.o: ajout.c
-	$(CC) $(FLAGS) ajout.c
+obj/ajout.o: src/ajout.c
+	$(CC) $(FLAGS) src/ajout.c -o obj/ajout.o
 
-deledu.o: deledu.c
-	$(CC) $(FLAGS) deledu.c
+obj/deledu.o: src/deledu.c
+	$(CC) $(FLAGS) src/deledu.c -o obj/deledu.o
 
-edumantui.o: edumantui.c
-	$(CC) $(FLAGS) edumantui.c
+obj/edumantui.o: src/edumantui.c
+	$(CC) $(FLAGS) src/edumantui.c -o obj/edumantui.o
 
-edusearch.o: edusearch.c
-	$(CC) $(FLAGS) edusearch.c
+obj/edusearch.o: src/edusearch.c
+	$(CC) $(FLAGS) src/edusearch.c -o obj/edusearch.o
 
-modedu.o: modedu.c
-	$(CC) $(FLAGS) modedu.c
+obj/modedu.o: src/modedu.c
+	$(CC) $(FLAGS) src/modedu.c -o obj/modedu.o
 
-sortedu.o: sortedu.c
-	$(CC) $(FLAGS) sortedu.c
+obj/sortedu.o: src/sortedu.c
+	$(CC) $(FLAGS) src/sortedu.c -o obj/sortedu.o
 
-fxport.o: fxport.c
-	$(CC) $(FLAGS) fxport.c
+obj/fxport.o: src/fxport.c
+	$(CC) $(FLAGS) src/fxport.c -o obj/fxport.o
 
-main.o: main.c
-	$(CC) $(FLAGS) main.c
+obj/main.o: src/main.c
+	$(CC) $(FLAGS) src/main.c -o obj/main.o
 
-searchone.o: searchone.c
-	$(CC) $(FLAGS) searchone.c
+obj/searchone.o: src/searchone.c
+	$(CC) $(FLAGS) src/searchone.c -o obj/searchone.o
 
 clean:
-	rm -f $(OBJS) $(OUT)
+	rm -rf $(BUILDDIR) $(TARGETDIR)

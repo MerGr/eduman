@@ -3,29 +3,20 @@
 #include <time.h>
 #include <stdlib.h>
 #include "eduStruct.h"
+#include "tui.h"
 
 date saisir_date(void){
+    int days[]={31,29,31,30,31,30,31,31,30,31,30,31};
     date temp;
-    int isValid = 0 ;
-        printf(" Veuillez saisir le jour : \n ");
-        scanf("%u",&temp.jour);
-        getchar() ;
-        while(isValid == 0){
-            printf(" Veuillez saisir le numero du mois : jan=1 ,feb=2 ,mar=3 ,apr=4 ,may=5 ,jun=6 ,jul=7 ,aug=8 ,sep=9 ,oct=10 ,nov=11 ,dec=12 \n ");
-            scanf("%d",(int *)&temp.mois);
-            getchar() ;
-             if(temp.mois<=0 || temp.mois>12){
-                printf(" Error: invalide : \n");
-                isValid = 0;
-            }
-            else{
-                isValid = 1 ;
-            }
-        }
-        printf(" Veuillez saisir l'annee : \n ");
-        scanf("%d",&temp.annee);
-        getchar() ;
-        return temp;
+    scanf("%u/%d/%u", &temp.jour, (int *) &temp.mois, &temp.annee);
+    //LEAP YEAR
+    if(temp.annee % 4) days[1] = 28;
+    else days[1] = 29;
+    while (temp.jour > days[temp.mois -1]){
+        printf("ERREUR ! Date invalide\n");
+
+    }
+    return temp;
 }
 
 int generate_apogee(int an){
@@ -63,21 +54,18 @@ void calc_moy(etudiant_info *etud){
 void ajout_etudiant_info(etudiant_info *etud){
     etudiant_info * p=etud;
     int isValid=0 ;
-    printf(" Veuillez saisir le nom : \n ");
-    scanf(" %[^\n]s",etud->nom);
-    getchar() ;
-    printf(" Veuillez saisir le prenom  : \n ");
-    scanf(" %[^\n]s",etud->prenom);
-    getchar() ;
+    printf("Veuillez saisir le nom et prenom : \n ");
+    scanf(" %s %s",etud->nom, etud->prenom);
+    getchar();
     while(isValid == 0){
-        printf(" Veuillez saisir le genre :  1 = femme , 2 = homme : \n ");
+        printf("Veuillez saisir le genre :  1 = Femme , 2 = Homme : \n ");
         scanf("%d",(int *)&etud->genre);
         switch(etud->genre){
         case F : isValid = 1 ;
         break;
         case H : isValid = 1 ;
         break;
-        default  : printf(" Error: invalide : \n");
+        default  : printf("Error: invalide : \n");
                 isValid = 0 ;
 
         }
@@ -85,9 +73,7 @@ void ajout_etudiant_info(etudiant_info *etud){
 
     isValid = 0 ;
     while(isValid == 0){
-        printf(" Veuillez saisir la filiere : SMI=1 / SMA=2 / SMC=3 / SMP=4 / SVI=5 / STU=6 \n ");
-        scanf("%d",(int *)&etud->filiere);
-        getchar() ;
+        etud->filiere = filselect();
         switch(etud->filiere){
         case SMI : isValid = 1 ;
         break;
@@ -101,11 +87,11 @@ void ajout_etudiant_info(etudiant_info *etud){
         break;
         case STU : isValid = 1 ;
         break;
-        default  : printf(" Error: invalide : \n");
+        default  : printf("Error: invalide : \n");
         isValid = 0  ;
     }
     }
-    printf(" Veuillez saisir la date d'inscription  : \n ");
+    printf("Veuillez saisir la date d'inscription (format DD/MM/YYYY): \n ");
     etud->date_inscription=saisir_date();
     etud->graduation_date=etud->date_inscription;
     etud->graduation_date.annee = etud->date_inscription.annee + 3 ;
@@ -114,11 +100,11 @@ void ajout_etudiant_info(etudiant_info *etud){
 
     isValid = 0 ;
     while(isValid == 0 ){
-        printf(" Veuillez enter le nombre de modules : \n  ");
+        printf("Veuillez enter le nombre de modules : \n  ");
         scanf("%d",&etud->num_of_modules);
         getchar() ;
         if(etud->num_of_modules<= 0 || etud->num_of_modules > 7){
-            printf(" Error: le nombre de modules par semestre ne doit pas depasser 7\n");
+            printf("Error: le nombre de modules par semestre ne doit pas depasser 7\n");
             isValid = 0;
         }
         else{
@@ -134,7 +120,7 @@ void ajout_etudiant_info(etudiant_info *etud){
 
         isValid = 0;
         while(isValid == 0){
-            printf(" Veuillez saisir la note du module: %d \n ",i+1);
+            printf("Veuillez saisir la note du module %s : \n ", etud->modules[i].module_name);
             scanf("%f",&etud->modules[i].module_note);
             getchar() ;
             if(etud->modules[i].module_note <0 || etud->modules[i].module_note >20){
@@ -148,12 +134,12 @@ void ajout_etudiant_info(etudiant_info *etud){
         isValid = 0;
     }
     for(int i=etud->num_of_modules; i<7; i++){
-        strcpy(etud->modules[i].module_name, "NaN");
+        strcpy(etud->modules[i].module_name, "---");
         etud->modules[i].module_note = 0.0;
     }
 
     calc_moy(etud);
-    printf(" \n etudiant ajoute avec succes. \n ");
+    printf(" \nEtudiant ajoute avec succes. \n ");
 
 }
 

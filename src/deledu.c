@@ -4,8 +4,8 @@
 #include "srchfuncs.h"
 
 void delete_etud(etudiant* debut , int apog){
-    etudiant* temp = searchoneByApo(debut,apog) ;
-    etudiant *p=debut  , *Q;
+    etudiant *temp = searchoneByApo(debut,apog) ;
+    etudiant *Q, *p=debut;
 
     if(temp == NULL){
         printf(" \n Il n'existe pas d'eutudiant correspondant à ce numero d'apogee \n");
@@ -14,7 +14,7 @@ void delete_etud(etudiant* debut , int apog){
         while(p != NULL){
             Q=p;
             p=p->suiv ;
-            if(temp == Q){
+            if(temp == p){
                 Q->suiv = p->suiv ;
                 free(p);
             }

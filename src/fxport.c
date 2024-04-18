@@ -19,7 +19,7 @@ void write_to_file(FILE *writefile, etudiant *studntlist){
    fseek (writefile, 0, SEEK_END);
    unsigned int filesize = ftell(writefile);
 
-   if(filesize == 0){ 
+   if(filesize == 0){
     fdraw_line(writefile, tabw);
     fprintf( writefile, "|  | Apogee |      Nom      |      Prenom      | Genre | Filiere | date d'inscription | date de graduation |     Email Academique     |    Module 1    | Note 1 |   Module 2   | Note 2 |   Module 3    | Note 3 |    Module 4   | Note 4 |  Module 5   | Note 5 |    Module 6    | Note 6 |    Module 7    | Note 7 | Moyenne |\n");
    }
@@ -53,7 +53,7 @@ void write_to_file(FILE *writefile, etudiant *studntlist){
          case 6:
             fprintf( writefile, " STU |");
             break;
-      }  
+      }
       fprintf( writefile, " %02u/%02d/%04u |", studntlist->etud_info.date_inscription.jour, studntlist->etud_info.date_inscription.mois, studntlist->etud_info.date_inscription.annee);
       fprintf( writefile, " %02u/%02d/%04u |", studntlist->etud_info.graduation_date.jour, studntlist->etud_info.graduation_date.mois, studntlist->etud_info.graduation_date.annee);
       fprintf( writefile, " %s |", studntlist->etud_info.academic_email);
@@ -69,7 +69,7 @@ void write_to_file(FILE *writefile, etudiant *studntlist){
 }
 
 void create(char *filename, etudiant *studntlist){
-    char name[strlen(filename) + 4];
+    char name[strlen(filename) + 5];
     snprintf( name, sizeof(name), "%s.txt", filename);
 
     FILE *file = fopen(name, "w+");
@@ -84,7 +84,7 @@ void create(char *filename, etudiant *studntlist){
 }
 
 void readfile(char *filename, boolean echototerm, etudiant *list, boolean import){
-    char name[strlen(filename) + 4], line[MAX_SIZE] = "";
+    char name[strlen(filename) + 5], line[MAX_SIZE] = "";
     snprintf( name, sizeof(name), "%s.txt", filename);
     etudiant *new_etudiant= (etudiant *) malloc(sizeof(etudiant));
     etudiant *p = new_etudiant;
@@ -133,7 +133,7 @@ void modfile(char *filename, etudiant *studntlist){
     readfile(filename, 0, NULL, 0);
 
     etudiant *tmplist = studntlist;
-    char name[strlen(filename) + 4], line[MAX_SIZE] = "";
+    char name[strlen(filename) + 5], line[MAX_SIZE] = "";
     unsigned int nums_to_del[entryls], tmp,i = 0;
     snprintf( name, sizeof(name), "%s.txt", filename);
     rename(name, "tmpbackup.txt");
@@ -148,7 +148,7 @@ void modfile(char *filename, etudiant *studntlist){
             if(tmp) {
                     nums_to_del[i] = tmp;
                     ++i;
-            }            
+            }
         } while(tmp);
 
         tmp=0;
