@@ -122,8 +122,8 @@ void readfile(char *filename, boolean echototerm, etudiant *list, boolean import
             entryls++;
         }
         if(import){
+            *list = *p;
             free(new_etudiant);
-            list = p;
         }
         fclose(file);
     }

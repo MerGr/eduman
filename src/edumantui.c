@@ -4,6 +4,8 @@
 #include "tui.h"
 #include "srchfuncs.h"
 
+extern boolean firstrun;
+
 void draw_line(int w){
    for(int i = 0; i <=w; i++)
       printf("-");
@@ -11,6 +13,7 @@ void draw_line(int w){
 }
 
 void draw_table(etudiant *studntlist){
+   printf("%c\n", 14);
    int n, i, tabw = strlen("|  |    Apogee    |      Nom      |      Prenom      |  Genre  | Filiere | date d'inscription | date de graduation |     Email Academique     |    Module 1    | Note 1 |   Module 2   | Note 2 |   Module 3    | Note 3 |    Module 4   | Note 4 |  Module 5   | Note 5 |    Module 6    | Note 6 |    Module 7    | Note 7 | Moyenne |");
    draw_line(tabw);
    printf("|  |    Apogee    |      Nom      |      Prenom      |  Genre  | Filiere | date d'inscription | date de graduation |     Email Academique     |    Module 1    | Note 1 |   Module 2   | Note 2 |   Module 3    | Note 3 |    Module 4   | Note 4 |  Module 5   | Note 5 |    Module 6    | Note 6 |    Module 7    | Note 7 | Moyenne |\n");
@@ -39,6 +42,8 @@ void draw_table(etudiant *studntlist){
       draw_line(tabw);
       studntlist = studntlist->suiv; n++;
    }
+   printf("Press Enter to continue.....\n"); getchar(); while( getchar() != '\n' );
+   printf("%c\n", 15);
 }
 
 void draw_student(etudiant_info *studnt){
@@ -116,7 +121,7 @@ void menu(unsigned int *out){
       "     *******************************************************************************************         \n"
       );
       printf("Votre choix : "); scanf("%u", &out[0]);
-   } while(out[0] > 3 || out[0] <= 0);
+   } while((out[0] > 3 || out[0] <= 0) && firstrun==1);
    if(out[0] != 3){
       do{
          puts(
@@ -149,6 +154,8 @@ void menu(unsigned int *out){
          printf("Votre choix : "); scanf("%u", &out[1]);
       } while(out[1] > 6 || out[1] < 0);
    }
+
+   firstrun = 0;
 }
 
 unsigned int searchselect(){

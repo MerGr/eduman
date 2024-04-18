@@ -9,6 +9,8 @@
 #include "delfuncs.h"
 #include "sortfuncs.h"
 
+boolean firstrun = 1;
+
 int main(){
    etudiant *student_list, *srchtarget, *sortd;
    char srchstr[50];

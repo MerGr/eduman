@@ -23,13 +23,13 @@ void add_module(etudiant_info* etud){
         printf("vous ne pouvez pas ajouter un nouveau module. \n");
     }
     else{
-        etud->num_of_modules++ ;
+        etud->num_of_modules++;
         printf(" Veuillez saisir le nom du module: %d \n " , etud->num_of_modules);
-        scanf(" %[^\n]s",etud->modules[etud->num_of_modules - 1].module_name);
+        scanf("> %[^\n]s",etud->modules[etud->num_of_modules - 1].module_name);
         getchar() ;
         do{
             printf(" Veuillez saisir la note du module: %d \n ",etud->num_of_modules);
-            scanf("%f",&etud->modules[etud->num_of_modules - 1].module_note);
+            scanf("> %f",&etud->modules[etud->num_of_modules - 1].module_note);
             getchar() ;
         }while(etud->modules[etud->num_of_modules - 1].module_note <0 || etud->modules[etud->num_of_modules - 1].module_note >20);
         printf("module ajoute avec succes\n");
@@ -40,15 +40,15 @@ void edit_module(etudiant_info* etud){
     int module_id;
     do{
         printf("veuillez entrer l'id du module : \n");
-        scanf("%d",&module_id);
+        scanf("> %d",&module_id);
         getchar();
     }while(module_id < 1 || module_id > etud->num_of_modules);
     printf(" Veuillez saisir le nouveau nom du module:\n ");
-    scanf(" %[^\n]s",etud->modules[module_id - 1].module_name);
+    scanf("> %[^\n]s",etud->modules[module_id - 1].module_name);
     getchar() ;
     do{
         printf(" Veuillez saisir la note du module: \n ");
-        scanf("%f",&etud->modules[module_id - 1].module_note);
+        scanf("> %f",&etud->modules[module_id - 1].module_note);
         getchar() ;
     }while(etud->modules[module_id - 1].module_note <0 || etud->modules[module_id - 1].module_note >20);
     printf("module modifie avec succes\n");
@@ -58,7 +58,7 @@ void delete_module(etudiant_info* etud){
     int module_id;
     do{
         printf("veuillez entrer l'id du module : \n");
-        scanf("%d",&module_id);
+        scanf("> %d",&module_id);
         getchar();
     }while(module_id < 1 || module_id > etud->num_of_modules);
 
@@ -72,7 +72,7 @@ void  modifier_modules_info(etudiant_info* etud){
     e_module choix;
     printf("est ce que vous vouler : \n");
     printf("supprimer un module = 1 , ajouter un module = 2 , modifier un module = 3 ");
-    scanf("%d",(int *)&choix);
+    scanf("> %d",(int *)&choix);
     switch (choix){
     case 1 : delete_module(etud);
         break;
@@ -88,22 +88,22 @@ void  modifier_modules_info(etudiant_info* etud){
 void modifier_etudiant(etudiant_info* etud){
     int rep;
     printf("\n la modificatin de l'email et l'apogee n'est pas autorisee ! \n");
-    printf("est que vous voulez modifier le nom : oui = 1 , non = 0");
-    scanf("%d",&rep);
+    printf("est que vous voulez modifier le nom : oui = 1 , non = 0 \n");
+    scanf("> %d",&rep);
     if(rep == 1){
         printf(" Veuillez saisir le  nouveau nom de l'etudiant : \n ");
-        scanf(" %[^\n]s",etud->nom);
+        scanf("> %[^\n]s",etud->nom);
     }
 
-    printf("est que vous voulez modifier le prenom : oui = 1 , non = 0");
-    scanf("%d",&rep);
+    printf("est que vous voulez modifier le prenom : oui = 1 , non = 0 \n");
+    scanf("> %d",&rep);
     if(rep == 1){
         printf(" Veuillez saisir le  nouveau prenom de l'etudiant : \n ");
-        scanf(" %[^\n]s",etud->prenom);
+        scanf("> %[^\n]s",etud->prenom);
     }
 
-    printf("est que vous voulez modifier le genre : oui = 1 , non = 0");
-    scanf("%d",&rep);
+    printf("est que vous voulez modifier le genre : oui = 1 , non = 0 \n");
+    scanf("> %d",&rep);
     if(rep == 1){
         if(etud->genre == 1){
             etud->genre=2;
@@ -114,18 +114,18 @@ void modifier_etudiant(etudiant_info* etud){
         printf("le genre a ete modifie") ;
     }
 
-    printf("est que vous voulez modifier la filiere : oui = 1 , non = 0");
-    scanf("%d",&rep);
+    printf("est que vous voulez modifier la filiere : oui = 1 , non = 0 \n");
+    scanf("> %d",&rep);
     if(rep == 1){
         do{
             printf(" Veuillez saisir la nouvelle filiere: \n ");
             printf(" SMI=1 / SMA=2 / SMC=3 / SMP=4 / SVI=5 / STU=6 \n ");
-            scanf("%d",(int *)&etud->filiere);
+            scanf("> %d",(int *)&etud->filiere);
         }while(etud->filiere<1 ||etud->filiere>6 );
     }
 
-    printf("est que vous voulez modifier la date d'inscription : oui = 1 , non = 0");
-    scanf("%d",&rep);
+    printf("est que vous voulez modifier la date d'inscription : oui = 1 , non = 0 \n");
+    scanf("> %d",&rep);
     if(rep == 1){
         printf(" Veuillez saisir la nouvelle date : \n ");
         etud->date_inscription=saisir_date();
@@ -134,14 +134,14 @@ void modifier_etudiant(etudiant_info* etud){
     }
 
     printf("vous avez ajoute %d modules \n",etud->num_of_modules);
-    printf("est que vous voulez modifier les informations de ces modules : oui = 1 , non = 0");
-    scanf("%d",&rep);
+    printf("est que vous voulez modifier les informations de ces modules : oui = 1 , non = 0 \n\n");
+    scanf("> %d",&rep);
 
     while(rep == 1){
         show_modules_info(etud);
         modifier_modules_info(etud);
-        printf("est que vous voulez encore modifier les informations de ces modules : oui = 1 , non = 0");
-        scanf("%d",&rep);
+        printf("est que vous voulez encore modifier les informations de ces modules : oui = 1 , non = 0 \n\n");
+        scanf("> %d",&rep);
     }
 }
 

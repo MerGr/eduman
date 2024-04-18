@@ -28,11 +28,9 @@ int generate_apogee(int an){
 }
 
 void generate_academic_email(etudiant_info * etud){
-    char email[100] = "";
-    char temp1[3];
-    temp1[0]= etud->prenom[0];
-    temp1[1]='.';
-    strcat(email ,temp1);
+    char email[100];
+    email[0] = etud->prenom[0];
+    email[1] = '.';
     strcat(email , etud->nom);
     int temp = etud->apogee % 1000 ;
     char temp_string[5] ;
@@ -55,7 +53,7 @@ void ajout_etudiant_info(etudiant_info *etud){
     etudiant_info * p=etud;
     int isValid=0 ;
     printf("Veuillez saisir le nom et prenom : \n ");
-    scanf(" %s %s",etud->nom, etud->prenom);
+    scanf("%s %s",etud->nom, etud->prenom);
     getchar();
     while(isValid == 0){
         printf("Veuillez saisir le genre :  1 = Femme , 2 = Homme : \n ");
@@ -114,8 +112,8 @@ void ajout_etudiant_info(etudiant_info *etud){
 
     printf("Veuillez enter les informations de chaque module : \n");
     for(int i=0 ; i<etud->num_of_modules ; i++){
-        printf(" Veuillez saisir le nom du module: %d \n " ,i+1);
-        scanf(" %[^\n]s",etud->modules[i].module_name);
+        printf("Veuillez saisir le nom du module: %d \n " ,i+1);
+        scanf("%[^\n]s",etud->modules[i].module_name);
         getchar() ;
 
         isValid = 0;
@@ -124,7 +122,7 @@ void ajout_etudiant_info(etudiant_info *etud){
             scanf("%f",&etud->modules[i].module_note);
             getchar() ;
             if(etud->modules[i].module_note <0 || etud->modules[i].module_note >20){
-                printf(" error : la note doit etre >=0 et <= 20 \n ");
+                printf("ERREUR : 0 <= NOTE VALIDE <= 20\n ");
                 isValid = 0;
             }
             else{
@@ -139,7 +137,7 @@ void ajout_etudiant_info(etudiant_info *etud){
     }
 
     calc_moy(etud);
-    printf(" \nEtudiant ajoute avec succes. \n ");
+    printf("\nEtudiant ajoute avec succes. \n ");
 
 }
 
