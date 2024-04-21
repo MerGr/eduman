@@ -11,9 +11,9 @@
 void show_modules_info(etudiant_info* etud){
     for(int i = 0 ; i<etud->num_of_modules ; i++){
         printf("-------------------------------------------------------------------------------------------\n");
-        printf("L'ID du module : %d " , i+1 );
-        printf("le nom du module : %s" , etud->modules[i].module_name) ;
-        printf("la note du module : %f" , etud->modules[i].module_note) ;
+        printf("L'ID du module : %d \n" , i+1 );
+        printf("le nom du module : %s \n" , etud->modules[i].module_name) ;
+        printf("la note du module : %f \n" , etud->modules[i].module_note) ;
         printf("-------------------------------------------------------------------------------------------\n");
     }
 }
@@ -24,7 +24,7 @@ void add_module(etudiant_info* etud){
     }
     else{
         etud->num_of_modules++;
-        printf(" Veuillez saisir le nom du module: %d \n " , etud->num_of_modules);
+        printf("Veuillez saisir le nom du module: %d \n " , etud->num_of_modules);
         scanf(" %[^\n]s",etud->modules[etud->num_of_modules - 1].module_name);
         getchar() ;
         do{
@@ -40,37 +40,35 @@ void edit_module(etudiant_info* etud){
     int module_id;
     do{
         printf("veuillez entrer l'id du module : \n");
-        scanf(" %d",&module_id);
-        getchar();
+        scanf("%d",&module_id);
     }while(module_id < 1 || module_id > etud->num_of_modules);
+
     printf(" Veuillez saisir le nouveau nom du module:\n ");
     scanf(" %[^\n]s",etud->modules[module_id - 1].module_name);
     getchar() ;
     do{
         printf(" Veuillez saisir la note du module: \n ");
-        scanf(" %f",&etud->modules[module_id - 1].module_note);
-        getchar() ;
+        scanf("%f",&etud->modules[module_id - 1].module_note);
     }while(etud->modules[module_id - 1].module_note <0 || etud->modules[module_id - 1].module_note >20);
-    printf("module modifie avec succes\n");
+    printf("Module modifie avec succes\n");
 }
 
 void delete_module(etudiant_info* etud){
     int module_id;
     do{
-        printf("veuillez entrer l'id du module : \n");
-        scanf(" %d",&module_id);
-        getchar();
+        printf("Veuillez entrer l'id du module : \n");
+        scanf("%d",&module_id);
     }while(module_id < 1 || module_id > etud->num_of_modules);
 
     for(int i=module_id-1 ; i<etud->num_of_modules ; i++){
         etud->modules[i] = etud->modules[i+1];
     }
-    etud->num_of_modules-- ;
+    etud->num_of_modules--;
 }
 
 void  modifier_modules_info(etudiant_info* etud){
     e_module choix;
-    printf("est ce que vous vouler : \n");
+    printf("Est ce que vous vouler : \n");
     printf("supprimer un module = 1 , ajouter un module = 2 , modifier un module = 3 ");
     scanf(" %d",(int *)&choix);
     switch (choix){

@@ -139,7 +139,8 @@ int main(){
                case 1: //Creation
                   printf("Nombre d'etudiants : ");
                   scanf("%u", &edunum);
-                  for(int i = 1; i<=edunum; i++){
+                  ajout_etudiant_info(&student_list->etud_info);
+                  for(int i = 0; i<edunum-1; i++){
                      ajout_fin(student_list);
                   }
 
@@ -150,11 +151,13 @@ int main(){
             } break;
 
          case 2: //Mode fichiers
-            mainlistfile = fopen("list.txt", "r");
-            if(mainlistfile == NULL) printf("Fichier list.txt introuvable ! Veuillez creer une base de donnees !\n");
-            else {
-               student_list = readfile("list", 1, student_list, 1);
-               printf("list.txt importe !\n");
+            while(!firstrun){
+               mainlistfile = fopen("list.txt", "r");
+               if(mainlistfile == NULL) printf("Fichier list.txt introuvable ! Veuillez creer une base de donnees !\n");
+               else {
+                  student_list = readfile("list", 1, student_list, 1);
+                  printf("list.txt importe !\n");
+               }
             }
             switch(option[1]){
                case 6: //Supprimer Etudiant
@@ -316,6 +319,8 @@ int main(){
                      create("list", student_list);
                      printf("list.txt cree avec succes!\n");
                   }
+                  else
+                     printf("list.txt existe deja !\n");
                   
                   break;
                case 0: //Retour
