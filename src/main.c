@@ -18,8 +18,9 @@ int main(){
    date targetdate;
    e_filiere targetfil;
 
-   student_list = NULL; //INIT
-
+   student_list = (etudiant *) malloc(sizeof(etudiant)); //INIT
+   srchtarget = (etudiant *) malloc(sizeof(etudiant));
+   sortd = (etudiant *) malloc(sizeof(etudiant));
    FILE *mainlistfile;
 
    do{
@@ -48,7 +49,7 @@ int main(){
                            scanf("%u", &apo);
                            srchtarget = searchoneByApo(student_list, apo);
                            if(!srchtarget) {printf("%u pas trouve !\n", apo);}
-                           else {draw_student(&srchtarget->etud_info);}
+                           else {draw_student(&srchtarget->etud_info, 1);}
 
                            break;
                         case 2:
@@ -139,7 +140,7 @@ int main(){
                   printf("Nombre d'etudiants : ");
                   scanf("%u", &edunum);
                   for(int i = 1; i<=edunum; i++){
-                     student_list = ajout_fin(student_list);
+                     ajout_fin(student_list);
                   }
 
                   if(student_list) break;
@@ -152,7 +153,7 @@ int main(){
             mainlistfile = fopen("list.txt", "r");
             if(mainlistfile == NULL) printf("Fichier list.txt introuvable ! Veuillez creer une base de donnees !\n");
             else {
-               readfile("list", 0, student_list, 1);
+               student_list = readfile("list", 1, student_list, 1);
                printf("list.txt importe !\n");
             }
             switch(option[1]){
@@ -306,14 +307,16 @@ int main(){
 
                   if(student_list) break;
                case 1: //Creation
-
-                  printf("Nombre d'etudiants : ");
-                  scanf("%u", &edunum);
-                  for(int i = 1; i<=edunum; i++){
-                     student_list = ajout_fin(student_list);
+                  if(!student_list){
+                     printf("Nombre d'etudiants : ");
+                     scanf("%u", &edunum);
+                     for(int i = 1; i<=edunum; i++){
+                        ajout_fin(student_list);
+                     }
+                     create("list", student_list);
+                     printf("list.txt cree avec succes!\n");
                   }
-                  create("list", student_list);
-                  printf("list.txt cree avec succes!\n");
+                  
                   break;
                case 0: //Retour
                   menu(option);
@@ -326,5 +329,8 @@ int main(){
       if(!student_list && option[0] != 3) printf("ERREUR ! BASE DE DONNEES NON EXISTANTE");
    } while(option[0] != 3);
 
+   free(student_list);
+   free(srchtarget);
+   free(sortd);
    return 0;
 }

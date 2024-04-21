@@ -6,9 +6,8 @@
  * *********************************/
 #include "eduStruct.h"
 
-extern void draw_line(int);
 extern void draw_table(etudiant *);
-extern void draw_student(etudiant_info *);
+extern void draw_student(etudiant_info *, int);
 extern void menu(unsigned int *);
 extern unsigned int searchselect();
 extern unsigned int sortselect();

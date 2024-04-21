@@ -6,90 +6,64 @@
 
 extern boolean firstrun;
 
-void draw_line(int w){
-   for(int i = 0; i <=w; i++)
-      printf("-");
-   printf("\n");
-}
-
-void draw_table(etudiant *studntlist){
-   printf("%c\n", 14);
-   int n, i, tabw = strlen("|  |    Apogee    |      Nom      |      Prenom      |  Genre  | Filiere | date d'inscription | date de graduation |     Email Academique     |    Module 1    | Note 1 |   Module 2   | Note 2 |   Module 3    | Note 3 |    Module 4   | Note 4 |  Module 5   | Note 5 |    Module 6    | Note 6 |    Module 7    | Note 7 | Moyenne |");
-   draw_line(tabw);
-   printf("|  |    Apogee    |      Nom      |      Prenom      |  Genre  | Filiere | date d'inscription | date de graduation |     Email Academique     |    Module 1    | Note 1 |   Module 2   | Note 2 |   Module 3    | Note 3 |    Module 4   | Note 4 |  Module 5   | Note 5 |    Module 6    | Note 6 |    Module 7    | Note 7 | Moyenne |\n");
-   draw_line(tabw);
-   n = 1;
-   while(studntlist != NULL){
-      printf("| %u |", n);
-      printf(" %u |", studntlist->etud_info.apogee);
-      printf(" %s |", studntlist->etud_info.nom);
-      printf(" %s |", studntlist->etud_info.prenom);
-      if(studntlist->etud_info.genre == 1)
-         printf(" Femme |");
-      else
-         printf(" Homme |");
-      printf(" %02u/%02d/%04u |", studntlist->etud_info.date_inscription.jour, studntlist->etud_info.date_inscription.mois, studntlist->etud_info.date_inscription.annee);
-      printf(" %02u/%02d/%04u |", studntlist->etud_info.graduation_date.jour, studntlist->etud_info.graduation_date.mois, studntlist->etud_info.graduation_date.annee);
-      printf(" %s |", studntlist->etud_info.academic_email);
-      for(i = 0; i<studntlist->etud_info.num_of_modules; i++){
-         printf(" %s |", studntlist->etud_info.modules[i].module_name);
-         printf(" %.4f |", studntlist->etud_info.modules[i].module_note);
-      }
-      for(int j = i; j < 7; j++){
-         printf("                |        |");
-      }
-      printf(" %.4f |\n", studntlist->etud_info.moy);
-      draw_line(tabw);
-      studntlist = studntlist->suiv; n++;
+void draw_student(etudiant_info *etud, int entryls){
+   printf("+----------------------------------+---------------------------------+\n");
+   printf("|\t\t\t\tEtudiant %d\n", entryls);
+   printf("+----------------------------------+---------------------------------+\n");
+   printf("|\tApogee\t\t\t\t\t%d\t\t\n", etud->apogee);
+   printf("+----------------------------------+---------------------------------+\n");
+   printf("|\tNom et Prenom\t\t\t%s %s\t\t\n",etud->nom,etud->prenom);
+   printf("+----------------------------------+---------------------------------+\n");
+   if(etud->genre == 1)
+      printf("|\tGenre\t\t\t\t\tFemme\t\t\n");
+   else
+      printf("|\tGenre\t\t\t\t\tHomme\t\t\n");
+   printf("+----------------------------------+---------------------------------+\n");
+   switch(etud->filiere){
+      case 1:
+         printf("|\tFiliere\t\t\t\t\tSMI\t\t\n");
+         break;
+      case 2:
+         printf("|\tFiliere\t\t\t\t\tSMA\t\t\n");
+         break;
+      case 3:
+         printf("|\tFiliere\t\t\t\t\tSMP\t\t\n");
+         break;
+      case 4:
+         printf("|\tFiliere\t\t\t\t\tSMC\t\t\n");
+         break;
+      case 5:
+         printf("|\tFiliere\t\t\t\t\tSVI\t\t\n");
+         break;
+      case 6:
+         printf("|\tFiliere\t\t\t\t\tSTU\t\t\n");
+         break;
    }
-   printf("Press Enter to continue.....\n"); getchar(); while( getchar() != '\n' );
-   printf("%c\n", 15);
+   printf("+----------------------------------+---------------------------------+\n");
+   printf("|\tDate d'inscription\t\t%02u/%02d/%04u\t\t\n",etud->date_inscription.jour,(int)etud->date_inscription.mois,etud->date_inscription.annee);
+   printf("+----------------------------------+---------------------------------+\n");
+   printf("|\tDate de graduation\t\t%02u/%02d/%04u\t\t\n",etud->graduation_date.jour,(int)etud->graduation_date.mois,etud->graduation_date.annee);
+   printf("+----------------------------------+---------------------------------+\n");
+   printf("|\tEmail Academique\t\t%s\t\t\n", etud->academic_email);
+   printf("+----------------------------------+---------------------------------+\n");
+   printf("|\tNom du module\t\t\t\tNote du module\t\t\n");
+   printf("+----------------------------------+---------------------------------+\n");
+   for(int i=0; i<7; i++){
+      printf("|\t%s\t\t\t\t%.4f\t\t\n", etud->modules[i].module_name, etud->modules[i].module_note);
+      printf("+----------------------------------+---------------------------------+\n");
+   }
+   printf("|\tMoyenne\t\t\t\t\t%.04f\t\t\n", etud->moy);
+   printf("+----------------------------------+---------------------------------+\n");
+   printf("+----------------------------------+---------------------------------+\n");
 }
 
-void draw_student(etudiant_info *studnt){
-   int n, i, tabw = strlen("|  | Apogee |      Nom      |      Prenom      | Genre | Filiere | date d'inscription | date de graduation |     Email Academique     |    Module 1    | Note 1 |   Module 2   | Note 2 |   Module 3    | Note 3 |    Module 4   | Note 4 |  Module 5   | Note 5 |    Module 6    | Note 6 |    Module 7    | Note 7 | Moyenne |");
-   draw_line(tabw);
-   printf("|  | Apogee |      Nom      |      Prenom      | Genre | Filiere | date d'inscription | date de graduation |     Email Academique     |    Module 1    | Note 1 |   Module 2   | Note 2 |   Module 3    | Note 3 |    Module 4   | Note 4 |  Module 5   | Note 5 |    Module 6    | Note 6 |    Module 7    | Note 7 | Moyenne |\n");
-   draw_line(tabw);
-   n = 1;
-   while(studnt != NULL){
-      printf("| %u |", n);
-      printf(" %u |", studnt->apogee);
-      printf(" %s |", studnt->nom);
-      printf(" %s |", studnt->prenom);
-      if(studnt->genre == 1)
-         printf(" Femme |");
-      else
-         printf(" Homme |");
-      switch(studnt->filiere){
-         case 1:
-            printf(" SMI |");
-            break;
-         case 2:
-            printf(" SMA |");
-            break;
-         case 3:
-            printf(" SMP |");
-            break;
-         case 4:
-            printf(" SMC |");
-            break;
-         case 5:
-            printf(" SVI |");
-            break;
-         case 6:
-            printf(" STU |");
-            break;
-      }
-      printf(" %02u/%02d/%04u |", studnt->date_inscription.jour, studnt->date_inscription.mois, studnt->date_inscription.annee);
-      printf(" %02u/%02d/%04u |", studnt->graduation_date.jour, studnt->graduation_date.mois, studnt->graduation_date.annee);
-      printf(" %s |", studnt->academic_email);
-      for(i = 0; i<7; i++){
-         printf(" %s |", studnt->modules[i].module_name);
-         printf(" %.4f |", studnt->modules[i].module_note);
-      }
-      printf(" %.4f |\n", studnt->moy);
-      draw_line(tabw);
+void draw_table(etudiant *stdntlist){
+   etudiant *p = stdntlist;
+   int n = 1;
+   while(p){
+      draw_student(&p->etud_info, n);
+      n++;
+      p = p->suiv;
    }
 }
 

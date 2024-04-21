@@ -142,15 +142,15 @@ void ajout_etudiant_info(etudiant_info *etud){
 }
 
 //ajout de nouvel etudiant a la fin de la liste
-etudiant * ajout_fin(etudiant* debut){
-    etudiant*  new_etudiant=(etudiant *)malloc(sizeof(etudiant));
+void ajout_fin(etudiant *debut){
+    etudiant *new_etudiant=(etudiant *)malloc(sizeof(etudiant));
     ajout_etudiant_info(&new_etudiant->etud_info );
     new_etudiant->suiv = NULL;
 
-    etudiant* p=debut;
+    etudiant *p=debut;
 
     if(debut == NULL){
-        return new_etudiant;
+        free(new_etudiant);
     }
     else{
         while(p->suiv != NULL){
@@ -158,5 +158,4 @@ etudiant * ajout_fin(etudiant* debut){
         }
     }
     p->suiv=new_etudiant;
-    return debut;
 }

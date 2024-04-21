@@ -2,7 +2,7 @@
 #include "eduStruct.h"
 
 // ordre croissant
-etudiant * sort_apogee(etudiant* debut ){
+etudiant *sort_apogee(etudiant* debut ){
     etudiant *p=debut  , *temp;
     etudiant_info data ;
     if(debut != NULL){
