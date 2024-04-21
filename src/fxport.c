@@ -182,7 +182,7 @@ void modfile(char *filename, etudiant *studntlist){
         i=0;
         while(fgets(line, MAX_SIZE, file) != NULL){
             
-            if(tmp != nums_to_del[i]*2){
+            if(tmp != nums_to_del[i]){
                 studntlist = studntlist->suiv;
             }
             else{
@@ -190,6 +190,7 @@ void modfile(char *filename, etudiant *studntlist){
                 studntlist = studntlist->suiv;
                 i++;
             }
+            tmp++;
         }
 
         write_to_file(file, tmplist);
