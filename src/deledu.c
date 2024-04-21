@@ -3,14 +3,11 @@
 #include "eduStruct.h"
 #include "srchfuncs.h"
 
-void delete_etud(etudiant* debut , int apog){
+int delete_etud(etudiant *debut , int apog){
     etudiant *temp = searchoneByApo(debut,apog) ;
     etudiant *Q, *p=debut;
 
-    if(temp == NULL){
-        printf(" \n Il n'existe pas d'eutudiant correspondant à ce numero d'apogee \n");
-    }
-    else{
+    if(temp != NULL){
         while(p != NULL){
             Q=p;
             p=p->suiv ;
@@ -19,5 +16,9 @@ void delete_etud(etudiant* debut , int apog){
                 free(p);
             }
         }
+
+        return 1;
     }
+
+    return 0;
 }

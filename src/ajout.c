@@ -149,13 +149,13 @@ void ajout_fin(etudiant *debut){
 
     etudiant *p=debut;
 
-    if(debut == NULL){
-        free(new_etudiant);
-    }
-    else{
+    if(debut != NULL){
         while(p->suiv != NULL){
             p=p->suiv;
         }
+        p->suiv=new_etudiant;
     }
-    p->suiv=new_etudiant;
+    else {
+        debut = new_etudiant;
+    }  
 }

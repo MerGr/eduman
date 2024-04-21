@@ -60,7 +60,7 @@ void draw_student(etudiant_info *etud, int entryls){
 void draw_table(etudiant *stdntlist){
    etudiant *p = stdntlist;
    int n = 1;
-   while(p){
+   while(p->suiv != NULL){
       draw_student(&p->etud_info, n);
       n++;
       p = p->suiv;
@@ -68,7 +68,7 @@ void draw_table(etudiant *stdntlist){
 }
 
 
-void menu(unsigned int *out){
+void menu_one(int *out){
    memset(out, 0, 3*sizeof(int));
    do{
       puts(
@@ -91,49 +91,47 @@ void menu(unsigned int *out){
       "     **          1- Mode Interactif (ATTENTION ! Sans Sauvegarde)                             **         \n"
       "     **          2- Mode manipulation des fichiers                                            **         \n"
       "     **                                                                                       **         \n"
-      "     **          3- Quitter                                                                   **         \n"
       "     *******************************************************************************************         \n"
       );
-      printf("Votre choix : "); scanf("%u", &out[0]);
-   } while((out[0] > 3 || out[0] <= 0) && firstrun==1);
-   if(out[0] != 3){
-      do{
-         puts(
-         "                                                                                                                           \n\n"
-         "           _          _          _                  _   _         _                   _                                      \n"
-         "          /\\ \\       /\\ \\       /\\_\\               /\\_\\/\\_\\ _    / /\\                /\\ \\     _                 \n"
-         "         /  \\ \\     /  \\ \\____ / / /         _    / / / / //\\_\\ / /  \\              /  \\ \\   /\\_\\                 \n"
-         "        / /\\ \\ \\   / /\\ \\_____\\\\ \\ \\__      /\\_\\ /\\ \\/ \\ \\/ / // / /\\ \\            / /\\ \\ \\_/ / /        \n"
-         "       / / /\\ \\_\\ / / /\\/___  / \\ \\___\\    / / //  \\____\\__/ // / /\\ \\ \\          / / /\\ \\___/ /               \n"
-         "      / /_/_ \\/_// / /   / / /   \\__  /   / / // /\\/________// / /  \\ \\ \\        / / /  \\/____/                       \n"
-         "     / /____/\\  / / /   / / /    / / /   / / // / /\\/_// / // / /___/ /\\ \\      / / /    / / /                           \n"
-         "    / /\\____\\/ / / /   / / /    / / /   / / // / /    / / // / /_____/ /\\ \\    / / /    / / /                            \n" 
-         "   / / /______ \\ \\ \\__/ / /    / / /___/ / // / /    / / // /_________/\\ \\ \\  / / /    / / /                           \n"
-         "  / / /_______\\ \\ \\___\\/ /    / / /____\\/ / \\/_/    / / // / /_       __\\ \\_\\/ / /    / / /                         \n"
-         "  \\/__________/  \\/_____/     \\/_________/          \\/_/ \\_\\___\\     /____/_/\\/_/     \\/_/                      \n\n\n"                                                                                                           
-         "     *******************************************************************************************         \n"
-         "     **                              Bienvenue a Eduman !                                     **         \n"
-         "     **                            Choisir votre operation :                                  **         \n"
-         "     **                                                                                       **         \n"
-         "     **          1- Creer une base de donnees                                                 **         \n"
-         "     **          2- Modifier la base                                                          **         \n"
-         "     **          3- Consulter la base                                                         **         \n"
-         "     **          4- Trier la base                                                             **         \n"
-         "     **          5- Rechercher dans la base                                                   **         \n"
-         "     **          6- Supprimer un etudiant                                                     **         \n"
-         "     **                                                                                       **         \n"
-         "     **          0- Retour                                                                    **         \n"
-         "     *******************************************************************************************         \n"
-         );
-         printf("Votre choix : "); scanf("%u", &out[1]);
-      } while(out[1] > 6 || out[1] < 0);
-   }
-
-   firstrun = 0;
+      printf("Votre choix : "); scanf("%d", &out[0]);
+   } while(out[0] > 2 || out[0] <= 0);
 }
 
-unsigned int searchselect(){
-   unsigned int out;
+void menu_two(int *out){
+   do{
+      puts(
+      "                                                                                                                           \n\n"
+      "           _          _          _                  _   _         _                   _                                      \n"
+      "          /\\ \\       /\\ \\       /\\_\\               /\\_\\/\\_\\ _    / /\\                /\\ \\     _                 \n"
+      "         /  \\ \\     /  \\ \\____ / / /         _    / / / / //\\_\\ / /  \\              /  \\ \\   /\\_\\                 \n"
+      "        / /\\ \\ \\   / /\\ \\_____\\\\ \\ \\__      /\\_\\ /\\ \\/ \\ \\/ / // / /\\ \\            / /\\ \\ \\_/ / /        \n"
+      "       / / /\\ \\_\\ / / /\\/___  / \\ \\___\\    / / //  \\____\\__/ // / /\\ \\ \\          / / /\\ \\___/ /               \n"
+      "      / /_/_ \\/_// / /   / / /   \\__  /   / / // /\\/________// / /  \\ \\ \\        / / /  \\/____/                       \n"
+      "     / /____/\\  / / /   / / /    / / /   / / // / /\\/_// / // / /___/ /\\ \\      / / /    / / /                           \n"
+      "    / /\\____\\/ / / /   / / /    / / /   / / // / /    / / // / /_____/ /\\ \\    / / /    / / /                            \n" 
+      "   / / /______ \\ \\ \\__/ / /    / / /___/ / // / /    / / // /_________/\\ \\ \\  / / /    / / /                           \n"
+      "  / / /_______\\ \\ \\___\\/ /    / / /____\\/ / \\/_/    / / // / /_       __\\ \\_\\/ / /    / / /                         \n"
+      "  \\/__________/  \\/_____/     \\/_________/          \\/_/ \\_\\___\\     /____/_/\\/_/     \\/_/                      \n\n\n"                                                                                                           
+      "     *******************************************************************************************         \n"
+      "     **                              Bienvenue a Eduman !                                     **         \n"
+      "     **                            Choisir votre operation :                                  **         \n"
+      "     **                                                                                       **         \n"
+      "     **          1- Creer une base de donnees                                                 **         \n"
+      "     **          2- Modifier la base                                                          **         \n"
+      "     **          3- Consulter la base                                                         **         \n"
+      "     **          4- Trier la base                                                             **         \n"
+      "     **          5- Rechercher dans la base                                                   **         \n"
+      "     **          6- Supprimer un etudiant                                                     **         \n"
+      "     **                                                                                       **         \n"
+      "     **          0- Quitter                                                                   **         \n"
+      "     *******************************************************************************************         \n"
+      );
+      printf("Votre choix : "); scanf("%d", &out[1]);
+   } while(out[1] > 6 || out[1] < 0);
+}
+
+int searchselect(){
+   int out;
    do{
       puts(
          "     *******************************************************************************************         \n"
@@ -147,14 +145,14 @@ unsigned int searchselect(){
          "     **                                                                                       **         \n"
          "     *******************************************************************************************         \n"
       );
-      printf("Votre choix : "); scanf("%u", &out);
+      printf("Votre choix : "); scanf("%d", &out);
    } while(out > 4 || out <= 0);
 
    return out;
 }
 
-unsigned int sortselect(){
-   unsigned int out;
+int sortselect(){
+   int out;
    do{
       puts(
          "     *******************************************************************************************         \n"
@@ -167,14 +165,14 @@ unsigned int sortselect(){
          "     **                                                                                       **         \n"
          "     *******************************************************************************************         \n"
       );
-      printf("Votre choix : "); scanf("%u", &out);
+      printf("Votre choix : "); scanf("%d", &out);
    } while(out > 3 || out <= 0);
 
    return out;
 }
 
-unsigned int viewselect(){
-   unsigned int out;
+int viewselect(){
+   int out;
    do{
       puts(
          "     *******************************************************************************************         \n"
@@ -187,7 +185,7 @@ unsigned int viewselect(){
          "     **                                                                                       **         \n"
          "     *******************************************************************************************         \n"
       );
-      printf("Votre choix : "); scanf("%u", &out);
+      printf("Votre choix : "); scanf("%d", &out);
    } while(out > 3 || out <= 0);
 
    return out;
@@ -212,6 +210,25 @@ e_filiere filselect(){
       );
       printf("Votre choix : "); scanf("%d", (int *)&out);
    } while(out > 6 || out <= 0);
+
+   return out;
+}
+
+int modselect(){
+   int out;
+   do{
+      puts(
+         "     *******************************************************************************************         \n"
+         "     **                                 Modification                                          **         \n"
+         "     **                            Choisir votre operation :                                  **         \n"
+         "     **                                                                                       **         \n"
+         "     **          1- Modifier les entrees existantes                                           **         \n"
+         "     **          2- Ajouter une entree                                                        **         \n"
+         "     **                                                                                       **         \n"
+         "     *******************************************************************************************         \n"
+      );
+      printf("Votre choix : "); scanf("%d", &out);
+   } while(out > 2 || out <= 0);
 
    return out;
 }

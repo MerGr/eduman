@@ -10,5 +10,5 @@ extern void fdraw_line(FILE *, int);
 extern void write_to_file(FILE *, etudiant *);
 
 extern void create(char *, etudiant *);
-extern etudiant *readfile(char *, int, etudiant *, int);
+extern etudiant *readfile(char *, int, int);
 extern void modfile(char *, etudiant *);

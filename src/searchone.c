@@ -12,10 +12,10 @@ etudiant *searchoneByApo(etudiant *start, int targetApo){
    do{
       if(start->etud_info.apogee == targetApo)
          return start;
-      else if(start->suiv != NULL) 
+      else if(start->suiv != NULL)
          start = start->suiv;
       
    } while(start->suiv != NULL);
 
-   return start->suiv;
+   return NULL;
 }
