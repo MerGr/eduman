@@ -152,7 +152,7 @@ int main(){
 
          case 2: //Mode fichiers
             while(!firstrun){
-               mainlistfile = fopen("list.txt", "r");
+               mainlistfile = fopen("list.csv", "r");
                if(mainlistfile == NULL) printf("Fichier list.txt introuvable ! Veuillez creer une base de donnees !\n");
                else {
                   student_list = readfile("list", 1, student_list, 1);
