@@ -360,6 +360,7 @@ int main(){
                case 1: //Creation
                      printf("Nombre d'etudiants : ");
                      scanf("%d", &edunum);
+                     student_list = (etudiant *) malloc(sizeof(etudiant));
                      for(int i = 1; i<=edunum; i++){
                         ajout_fin(student_list);
                      }
@@ -377,6 +378,6 @@ int main(){
       student_list = head;
    } while(option[1] != 0);
 
-   if(student_list) free(student_list);
+   if(student_list) free_list(student_list);
    return 0;
 }
