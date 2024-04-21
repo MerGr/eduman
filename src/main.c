@@ -151,12 +151,12 @@ int main(){
             } break;
 
          case 2: //Mode fichiers
-            while(!firstrun){
+            if(!firstrun){
                mainlistfile = fopen("list.csv", "r");
-               if(mainlistfile == NULL) printf("Fichier list.txt introuvable ! Veuillez creer une base de donnees !\n");
+               if(mainlistfile == NULL) printf("Fichier list.csv introuvable ! Veuillez creer une base de donnees !\n");
                else {
                   student_list = readfile("list", 1, student_list, 1);
-                  printf("list.txt importe !\n");
+                  printf("list.csv importe !\n");
                }
             }
             switch(option[1]){
@@ -186,7 +186,7 @@ int main(){
                            else{
                               snprintf(srchstr, 50, "%u", apo);
                               create(srchstr, srchtarget);
-                              printf("%u.txt cree\n", apo);
+                              printf("%u.csv cree\n", apo);
                            }
                            break;
                         case 2:
@@ -195,7 +195,7 @@ int main(){
                            if(!srchtarget) printf("%s pas trouve!\n", srchstr);
                            else{
                               create(srchstr, srchtarget);
-                              printf("%s.txt cree\n", srchstr);
+                              printf("%s.csv cree\n", srchstr);
                            }
 
                            break;
@@ -205,7 +205,7 @@ int main(){
                            if(!srchtarget) printf("%s pas trouve!\n", srchstr);
                            else{
                               create(srchstr, srchtarget);
-                              printf("%s.txt cree\n", srchstr);
+                              printf("%s.csv cree\n", srchstr);
                            }
                            break;
                         case 4:
@@ -216,7 +216,7 @@ int main(){
                            else{
                               snprintf(srchstr, 50, "%02u/%02d/%04u", targetdate.jour, targetdate.mois, targetdate.annee);
                               create(srchstr, srchtarget);
-                              printf("%s.txt cree\n", srchstr);
+                              printf("%s.csv cree\n", srchstr);
                            }
                            break;
                      }
@@ -230,19 +230,19 @@ int main(){
                         case 1:
                            student_list = sort_apogee(student_list);
                            create("TriParApo", student_list);
-                           printf("TriParApo.txt cree!\n");
+                           printf("TriParApo.csv cree!\n");
 
                            break;
                         case 2:
                            student_list = sort_moy(student_list);
                            create("TriParMoy", student_list);
-                           printf("TriParMoy.txt cree!\n");
+                           printf("TriParMoy.csv cree!\n");
 
                            break;
                         case 3:
                            student_list = sort_date_inscription(student_list);
                            create("TriParDate", student_list);
-                           printf("TriParDate.txt cree!\n");
+                           printf("TriParDate.csv cree!\n");
 
                            break;
                      }
@@ -317,10 +317,10 @@ int main(){
                         ajout_fin(student_list);
                      }
                      create("list", student_list);
-                     printf("list.txt cree avec succes!\n");
+                     printf("list.csv cree avec succes!\n");
                   }
                   else
-                     printf("list.txt existe deja !\n");
+                     printf("list.csv existe deja !\n");
                   
                   break;
                case 0: //Retour
