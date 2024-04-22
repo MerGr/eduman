@@ -60,11 +60,11 @@ void draw_student(etudiant_info *etud, int entryls){
 void draw_table(etudiant *stdntlist){
    etudiant *p = stdntlist;
    int n = 1;
-   while(p->suiv != NULL){
+   do{
       draw_student(&p->etud_info, n);
       n++;
-      p = p->suiv;
-   }
+      if(p->suiv) p = p->suiv;
+   }while(p->suiv != NULL);
 }
 
 

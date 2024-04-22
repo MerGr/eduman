@@ -88,25 +88,22 @@ void  modifier_modules_info(etudiant_info* etud){
 
 void modifier_etudiant(etudiant_info *etud){
     int rep;
-    char tmp[50];
-    printf("\n la modificatin de l'email et l'apogee n'est pas autorisee ! \n");
+    printf("\n<!> La modificatin de l'email et l'apogee n'est pas autorisee ! \n");
     printf("Est que vous voulez modifier le nom : oui = 1 , non = 0 \n");
     scanf("%d",&rep);
     if(rep == 1){
-        printf(" Veuillez saisir le  nouveau nom de l'etudiant : \n ");
-        scanf("%s",tmp);
-        strncpy(etud->nom, tmp, 50);
+        printf(" Veuillez saisir le nouveau nom de l'etudiant : \n ");
+        scanf("%s", etud->nom);
     }
 
-    printf("est que vous voulez modifier le prenom : oui = 1 , non = 0 \n");
+    printf("Est que vous voulez modifier le prenom : oui = 1 , non = 0 \n");
     scanf("%d",&rep);
     if(rep == 1){
-        printf(" Veuillez saisir le  nouveau prenom de l'etudiant : \n ");
-        scanf("%s", tmp);
-        strncpy(etud->prenom, tmp, 50);
+        printf("Veuillez saisir le  nouveau prenom de l'etudiant : \n ");
+        scanf("%s", etud->prenom);
     }
 
-    printf("est que vous voulez modifier le genre : oui = 1 , non = 0 \n");
+    printf("Est que vous voulez modifier le genre : oui = 1 , non = 0 \n");
     scanf("%d",&rep);
     if(rep == 1){
         if(etud->genre == 1){
@@ -118,39 +115,39 @@ void modifier_etudiant(etudiant_info *etud){
         printf("le genre a ete modifie\n") ;
     }
 
-    printf("est que vous voulez modifier la filiere : oui = 1 , non = 0 \n");
+    printf("Est que vous voulez modifier la filiere : oui = 1 , non = 0 \n");
     scanf("%d",&rep);
     if(rep == 1){
             etud->filiere = filselect();
     }
 
-    printf("est que vous voulez modifier la date d'inscription : oui = 1 , non = 0 \n");
+    printf("Est que vous voulez modifier la date d'inscription : oui = 1 , non = 0 \n");
     scanf("%d",&rep);
     if(rep == 1){
-        printf(" Veuillez saisir la nouvelle date : \n ");
+        printf("Veuillez saisir la nouvelle date : \n ");
         etud->date_inscription=saisir_date();
         etud->graduation_date=etud->date_inscription;
         etud->graduation_date.annee = etud->date_inscription.annee + 3 ;
     }
 
-    printf("vous avez ajoute %d modules \n",etud->num_of_modules);
-    printf("est que vous voulez modifier les informations de ces modules : oui = 1 , non = 0 \n\n");
+    printf("Vous avez ajoute %d modules \n",etud->num_of_modules);
+    printf("Est que vous voulez modifier les informations de ces modules : oui = 1 , non = 0 \n\n");
     scanf("%d",&rep);
 
     while(rep == 1){
         show_modules_info(etud);
         modifier_modules_info(etud);
-        printf("est que vous voulez encore modifier les informations de ces modules : oui = 1 , non = 0 \n\n");
+        printf("Est que vous voulez encore modifier les informations de ces modules : oui = 1 , non = 0 \n\n");
         scanf("%d",&rep);
     }
 }
 
 etudiant *modifier_etud_info(etudiant* debut , int apog){
     etudiant *temp = searchoneByApo(debut, apog);
-    etudiant* p=debut;
+    etudiant *p=debut;
 
     if(temp == NULL){
-        printf(" \n Il n'existe pas d'eutudiant correspondant à ce numero d'apogee \n");
+        printf(" \n Il n'existe pas d'etudiant correspondant à ce numero d'apogee \n");
     }
     else{
         while(p != temp){

@@ -142,11 +142,20 @@ int main(){
                            student_list = modifier_etud_info(student_list, (int)apo);
                            break;
                         case 2:
-                           printf("Nombre d'etudiants : ");
-                           scanf("%d", &edunum);
-                           for(int i = 0; i<edunum; i++){
-                              ajout_fin(student_list);
+                           do{
+                              printf("Nombre d'etudiants : ");
+                              scanf("%d", &edunum);
+                           } while(edunum < 0);
+                           head = student_list;
+                           while(student_list){
+                              student_list= student_list->suiv;
                            }
+                           etudiant *current = student_list;
+                           for(int i = 0; i<edunum; i++){
+                              current = ajout();
+                              current= current->suiv;
+                           }
+                           student_list = head;
                         }
                      printf("Nouvelle Liste :\n");
                      draw_table(student_list);
@@ -157,11 +166,8 @@ int main(){
                case 1: //Creation
                   printf("Nombre d'etudiants : ");
                   scanf("%d", &edunum);
-                  student_list = (etudiant *) malloc(sizeof(malloc));
-                  head = student_list;
-                  ajout_etudiant_info(&student_list->etud_info);
-                  for(int i = 1; i<edunum; i++){
-                     ajout_fin(student_list);
+                  for(int i = 0; i<edunum; i++){
+                     student_list = ajout();
                   }
                   draw_table(student_list);
 
@@ -187,7 +193,6 @@ int main(){
                }
                firstrun = 0;
             } else {
-               student_list = head;
                menu_two(option);
             }
             switch(option[1]){
@@ -345,12 +350,23 @@ int main(){
                            student_list = readfile("list", 0, 1);
                            break;
                         case 2:
-                           printf("Nombre d'etudiants : ");
-                           scanf("%d", &edunum);
-                           for(int i = 0; i<edunum; i++){
-                              ajout_fin(student_list);
+                           do{
+                              printf("Nombre d'etudiants : ");
+                              scanf("%d", &edunum);
+                           } while(edunum < 0);
+                           head = student_list;
+                           while(student_list){
+                              student_list= student_list->suiv;
                            }
+                           etudiant *current = student_list;
+                           for(int i = 0; i<edunum; i++){
+                              current = ajout();
+                              current= current->suiv;
+                           }
+                           student_list = head;
+                           draw_table(student_list);
                            create("list", student_list);
+                           readfile("list", 1, 0);
                            printf("list.csv cree avec succes!\n");
                         }
                      printf("Nouvelle Liste :\n");
@@ -362,14 +378,11 @@ int main(){
                case 1: //Creation
                      printf("Nombre d'etudiants : ");
                      scanf("%d", &edunum);
-                     student_list = (etudiant *) malloc(sizeof(malloc));
-                     head = student_list;
-                     ajout_etudiant_info(&student_list->etud_info);
-                     for(int i = 1; i<edunum; i++){
-                        ajout_fin(student_list);
+                     for(int i = 0; i<edunum; i++){
+                        student_list = ajout();
                      }
-                     draw_table(student_list);
                      create("list", student_list);
+                     readfile("list", 1, 0);
                      printf("list.csv cree avec succes!\n");
 
                   break;

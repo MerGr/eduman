@@ -54,7 +54,6 @@ void ajout_etudiant_info(etudiant_info *etud){
     int isValid=0 ;
     printf("Veuillez saisir le nom et prenom : \n ");
     scanf("%s %s",etud->nom, etud->prenom);
-    getchar();
     while(isValid == 0){
         printf("Veuillez saisir le genre :  1 = Femme , 2 = Homme : \n ");
         scanf("%d",(int *)&etud->genre);
@@ -98,9 +97,9 @@ void ajout_etudiant_info(etudiant_info *etud){
 
     isValid = 0 ;
     while(isValid == 0 ){
-        printf("Veuillez enter le nombre de modules : \n  ");
+        printf("Veuillez entrer le nombre de modules : \n  ");
         scanf("%d",&etud->num_of_modules);
-        getchar() ;
+        
         if(etud->num_of_modules<= 0 || etud->num_of_modules > 7){
             printf("Error: le nombre de modules par semestre ne doit pas depasser 7\n");
             isValid = 0;
@@ -110,17 +109,17 @@ void ajout_etudiant_info(etudiant_info *etud){
         }
     }
 
-    printf("Veuillez enter les informations de chaque module : \n");
+    printf("Veuillez entrer les informations de chaque module : \n");
     for(int i=0 ; i<etud->num_of_modules ; i++){
-        printf("Veuillez saisir le nom du module: %d \n " ,i+1);
-        scanf("%[^\n]s",etud->modules[i].module_name);
-        getchar() ;
+        printf("Veuillez saisir le nom du module %d: \n " ,i+1);
+        scanf("%s",etud->modules[i].module_name);
+        
 
         isValid = 0;
         while(isValid == 0){
             printf("Veuillez saisir la note du module %s : \n ", etud->modules[i].module_name);
             scanf("%f",&etud->modules[i].module_note);
-            getchar() ;
+            
             if(etud->modules[i].module_note <0 || etud->modules[i].module_note >20){
                 printf("ERREUR : 0 <= NOTE VALIDE <= 20\n ");
                 isValid = 0;
@@ -142,17 +141,10 @@ void ajout_etudiant_info(etudiant_info *etud){
 }
 
 //ajout de nouvel etudiant a la fin de la liste
-void ajout_fin(etudiant *p){
+etudiant *ajout(){
     etudiant *new_etudiant=(etudiant *)malloc(sizeof(etudiant));
     ajout_etudiant_info(&new_etudiant->etud_info);
     new_etudiant->suiv = NULL;
 
-    if(p != NULL){
-        while(p->suiv != NULL){
-            p=p->suiv;
-        }
-        p->suiv = new_etudiant;
-    } else {
-        p = new_etudiant;
-    }
+    return new_etudiant;
 }

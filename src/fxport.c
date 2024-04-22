@@ -10,13 +10,14 @@
 #define MAX_SIZE 2048
 int entryls;
 
-void write_to_file(FILE *writefile, etudiant *studntlist){
+void write_to_file(FILE *writefile, etudiant *list){
+   etudiant *studntlist = list;
    int n;
    fprintf(writefile,"N, Apogee, Nom, Prenom, Genre, Filiere, Date d'inscription, Date de graduation,");
    fprintf(writefile,"Email academique, Module 1, Note 1, Module 2, Note 2, Module 3, Note 3, Module 4,");
    fprintf(writefile,"Note 4, Module 5, Note 5, Module 6, Note 6, Module 7, Note 7, Moyenne\n");
    n = 1;
-   while(studntlist->suiv != NULL){
+   while(studntlist){
 
         fprintf(writefile, "%d,", n);
 
@@ -69,12 +70,13 @@ void write_to_file(FILE *writefile, etudiant *studntlist){
 }
 
 void create(char *filename, etudiant *studntlist){
+    etudiant *p = studntlist;
     char name[strlen(filename) + 5];
     snprintf( name, sizeof(name), "%s.csv", filename);
 
     FILE *file = fopen(name, "w+");
     if (file != NULL){
-        write_to_file(file, studntlist);
+        write_to_file(file, p);
     }
     else{
         printf("ERREUR ! Impossible d'ouvrir %s !\n", name);
@@ -168,48 +170,10 @@ etudiant *readfile(char *filename, int echototerm, int import) {
 
 
 void modfile(char *filename, etudiant *studntlist){
-    readfile(filename, 0, 0);
-
-    char name[strlen(filename) + 5], line[MAX_SIZE];
-    unsigned int nums_to_del[entryls], tmp,i = 0;
-
-    snprintf( name, sizeof(name), "%s.csv", filename);
-
-    FILE *file = fopen(name, "r");
-    if(file != NULL){
-        nums_to_del[0] = 0; //INIT for check
-        do{
-            do{
-                printf("Entrez Etudiants a modifier (MAX %d) (0 pour continuer): ", entryls); scanf("%u", &tmp);
-            } while(tmp>entryls);
-            if(tmp){
-                    nums_to_del[i] = tmp;
-                    ++i;
-            }
-        } while(tmp);
-
-        i=0;
-        if(nums_to_del[0]){
-            fgets(line, MAX_SIZE, file); //SKIP HEADER
-            tmp = 1;
-            while(fgets(line, MAX_SIZE, file) != NULL){
-                if(tmp != nums_to_del[i]){
-                    studntlist = studntlist->suiv;
-                }
-                else{
-                    modifier_etudiant(&studntlist->etud_info);
-                    studntlist = studntlist->suiv;
-                    i++;
-                }
-                tmp++;
-            }
-
-            fclose(file);
-
-            create("list", studntlist);
-        }
-    }
-    else{
-        printf("ERREUR! Impossible d'ouvrir %s !\n", name);
-    }
+    int apo;
+    printf("Numero Apogee d'etudiant : ");
+    scanf("%d", &apo);
+    studntlist = modifier_etud_info(studntlist, (int)apo);
+    create(filename, studntlist);
+    readfile(filename, 1, 0);
 }
