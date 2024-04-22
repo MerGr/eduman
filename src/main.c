@@ -16,6 +16,8 @@ int main(){
    date targetdate;
    e_filiere targetfil;
 
+   student_list = NULL;
+
    boolean firstrun = 1;
 
    FILE *mainlistfile;
@@ -158,7 +160,7 @@ int main(){
                   student_list = (etudiant *) malloc(sizeof(malloc));
                   head = student_list;
                   ajout_etudiant_info(&student_list->etud_info);
-                  for(int i = 0; i<edunum; i++){
+                  for(int i = 1; i<edunum; i++){
                      ajout_fin(student_list);
                   }
                   draw_table(student_list);
@@ -174,18 +176,18 @@ int main(){
                mainlistfile = fopen("list.csv", "r");
                if(mainlistfile == NULL) {
                   option[1] = 1;
-                  printf("Fichier list.csv introuvable ! Veuillez creer une base de donnees ! %d\n", option[1]);
+                  printf("Fichier list.csv introuvable ! Veuillez creer une base de donnees !\n");
                }
                else {
-                  student_list = readfile("list", 1, 1);
+                  if(!student_list) student_list = readfile("list", 1, 1);
                   head = student_list;
                   printf("list.csv importe !\n");
                   fclose(mainlistfile);
-                  student_list = head;
                   menu_two(option);
                }
                firstrun = 0;
             } else {
+               student_list = head;
                menu_two(option);
             }
             switch(option[1]){
@@ -360,10 +362,13 @@ int main(){
                case 1: //Creation
                      printf("Nombre d'etudiants : ");
                      scanf("%d", &edunum);
-                     student_list = (etudiant *) malloc(sizeof(etudiant));
-                     for(int i = 1; i<=edunum; i++){
+                     student_list = (etudiant *) malloc(sizeof(malloc));
+                     head = student_list;
+                     ajout_etudiant_info(&student_list->etud_info);
+                     for(int i = 1; i<edunum; i++){
                         ajout_fin(student_list);
                      }
+                     draw_table(student_list);
                      create("list", student_list);
                      printf("list.csv cree avec succes!\n");
 

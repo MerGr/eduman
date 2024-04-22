@@ -164,10 +164,11 @@ etudiant *modifier_etud_info(etudiant* debut , int apog){
 
 void free_list(etudiant *tofree){
     etudiant *node = tofree;
+    etudiant *tmp;
 
-    if(node->suiv){
-        free_list(node->suiv);
-    } else {
-        free(node);
+    while(node != NULL){
+        tmp = node;
+        node = node->suiv;
+        free(tmp);
     }
 }
