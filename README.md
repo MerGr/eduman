@@ -16,22 +16,22 @@ cd bin/
 ### Contenu du code source
 
 8 fichiers .h (C header files)
-     ajoutfuncs.h
-        Prototypes des fonctions d'ajouts et creation
-     delfuncs.h
-        Prototypes de fonction du suppression d'un etudiant
-     eduStruct.h
-        Prototypes des structures de donnees du programme
-     filemanip.h
-        Prototypes des fonctions de manipulation des fichiers
-     modfuncs.h
-        Prototypes des fonctions de modifications des fichiers
-     sortfuncs.h
-        Prototypes des fonctions de tri
-     srchfuncs.h
-        Prototypes des fonctions de recherche
-     tui.h
-        Prototypes de l'interface utilisateur textuel
+ajoutfuncs.h
+Prototypes des fonctions d'ajouts et creation
+delfuncs.h
+Prototypes de fonction du suppression d'un etudiant
+eduStruct.h
+Prototypes des structures de donnees du programme
+filemanip.h
+Prototypes des fonctions de manipulation des fichiers
+modfuncs.h
+Prototypes des fonctions de modifications des fichiers
+sortfuncs.h
+Prototypes des fonctions de tri
+srchfuncs.h
+Prototypes des fonctions de recherche
+tui.h
+Prototypes de l'interface utilisateur textuel
 9 fichiers .c (C source files)
 
      main.c
