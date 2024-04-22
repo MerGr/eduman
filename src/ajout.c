@@ -1,3 +1,11 @@
+//
+//  GRAOUI ABDERRAHMANE - 2023152
+//  
+//  EL AMLI Naima - 1717283
+//
+//  EDUMAN
+//
+
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -176,7 +184,7 @@ void ajout_fin(etudiant **debut){
     ajout_etudiant_info(&new_etudiant->etud_info);
     new_etudiant->suiv = NULL;
     etudiant *head = *debut;
-    
+
     while(head->suiv != NULL){
         head=head->suiv;
     }

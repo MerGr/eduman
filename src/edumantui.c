@@ -1,3 +1,10 @@
+//
+//  GRAOUI ABDERRAHMANE - 2023152
+//  
+//  EL AMLI Naima - 1717283
+//
+//  EDUMAN
+//
 #include <stdio.h>
 #include <string.h>
 #include "eduStruct.h"
@@ -216,7 +223,7 @@ e_filiere filselect(){
 
 int modselect(){
    int out;
-   do{
+   /*do{
       puts(
          "     *******************************************************************************************         \n"
          "     **                                 Modification                                          **         \n"
@@ -228,7 +235,8 @@ int modselect(){
          "     *******************************************************************************************         \n"
       );
       printf("Votre choix : "); scanf("%d", &out);
-   } while(out > 2 || out <= 0);
-
+   } while(out > 2 || out <= 0);*/
+   //TODO : Ajout, this doesn't work, must be fixed
+   out = 1;
    return out;
 }

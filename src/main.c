@@ -1,3 +1,10 @@
+//
+//  GRAOUI ABDERRAHMANE - 2023152
+//  
+//  EL AMLI Naima - 1717283
+//
+//  EDUMAN
+//
 #include <stdio.h>
 #include <stdlib.h>
 #include "srchfuncs.h"
@@ -141,7 +148,7 @@ int main(){
                            scanf("%d", &apo);
                            student_list = modifier_etud_info(student_list, (int)apo);
                            break;
-                        case 2:
+                        case 5:
                            do{
                               printf("Nombre d'etudiants : ");
                               scanf("%d", &edunum);
@@ -149,6 +156,7 @@ int main(){
                            for(int i = 0; i<edunum; i++){
                               ajout_fin(&student_list);
                            }
+                           //TODO : this is horrible, this doesn't work, must be fixed
                         }
                      printf("Nouvelle Liste :\n");
                      draw_table(student_list);
@@ -338,14 +346,14 @@ int main(){
                         case 1: //Modifier
                            modfile("list", student_list);
                            break;
-                        case 2: //Ajouter
+                        case 5: //Ajouter
                            do{
                               printf("Nombre d'etudiants : ");
                               scanf("%d", &edunum);
                            } while(edunum < 0);
                            for(int i=0; i<edunum; i++)
                                  ajout_fin(&student_list);
-                           draw_table(student_list);
+                           //TODO : this is horrible, this doesn't work, must be fixed
                            create("list", student_list);
                            printf("list.csv cree avec succes!\n");
                         }
