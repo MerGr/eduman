@@ -10,7 +10,7 @@
 #include "sortfuncs.h"
 
 int main(){
-   etudiant *student_list, *srchtarget, *sortd, *head;
+   etudiant *student_list, *srchtarget, *sortd;
    char srchstr[50];
    int apo, edunum, option[3];
    date targetdate;
@@ -36,7 +36,7 @@ int main(){
             }
             switch (option[1]){
                case 6: //Supprimer Etudiant
-                  if(student_list){ student_list = head;
+                  if(student_list){
                      printf("Numero Apogee d'etudiant : ");
                      scanf("%d", &apo);
                      delete_etud(student_list, apo);
@@ -48,7 +48,7 @@ int main(){
 
                   break;
                case 5: //Rechercher
-                  if(student_list){ student_list = head;
+                  if(student_list){ 
                      option[2] = searchselect();
                      switch (option[2]){
                         case 1:
@@ -86,7 +86,7 @@ int main(){
 
                   break;
                case 4: //Tri
-                  if(student_list){ student_list = head;
+                  if(student_list){ 
                      option[2]=sortselect();
                      switch (option[2]){
                         case 1:
@@ -109,7 +109,7 @@ int main(){
 
                   break;
                case 3: //Consultation
-                  if(student_list){ student_list = head;
+                  if(student_list){ 
                      option[2]=viewselect();
                      switch (option[2]){
                         case 1:
@@ -133,7 +133,7 @@ int main(){
 
                   break;
                case 2: //Modification
-                  if(student_list){ student_list = head;
+                  if(student_list){ 
                      option[2]=modselect();
                      switch (option[2]){
                         case 1:
@@ -146,16 +146,9 @@ int main(){
                               printf("Nombre d'etudiants : ");
                               scanf("%d", &edunum);
                            } while(edunum < 0);
-                           head = student_list;
-                           while(student_list){
-                              student_list= student_list->suiv;
-                           }
-                           etudiant *current = student_list;
                            for(int i = 0; i<edunum; i++){
-                              current = ajout();
-                              current= current->suiv;
+                              ajout_fin(&student_list);
                            }
-                           student_list = head;
                         }
                      printf("Nouvelle Liste :\n");
                      draw_table(student_list);
@@ -166,14 +159,12 @@ int main(){
                case 1: //Creation
                   printf("Nombre d'etudiants : ");
                   scanf("%d", &edunum);
-                  for(int i = 0; i<edunum; i++){
-                     student_list = ajout();
-                  }
+                  if(student_list) free_list(&student_list);
+                  for(int i = 0; i<edunum; i++)
+                        ajout(student_list);
                   draw_table(student_list);
-
                   break;
-               case 0: //Retour
-                  menu_two(option);
+               case 0: //Quitter
                   break;
             } break;
 
@@ -183,12 +174,12 @@ int main(){
                if(mainlistfile == NULL) {
                   option[1] = 1;
                   printf("Fichier list.csv introuvable ! Veuillez creer une base de donnees !\n");
+                  fclose(mainlistfile);
                }
                else {
-                  if(!student_list) student_list = readfile("list", 1, 1);
-                  head = student_list;
-                  printf("list.csv importe !\n");
                   fclose(mainlistfile);
+                  if(!student_list) readfile("list", 1, &student_list);
+                  printf("list.csv importe !\n");
                   menu_two(option);
                }
                firstrun = 0;
@@ -197,13 +188,13 @@ int main(){
             }
             switch(option[1]){
                case 6: //Supprimer Etudiant
-                  if(student_list){ student_list = head;
+                  if(student_list){ 
                      printf("Numero Apogee d'etudiant : ");
                      scanf("%d", &apo);
                      if(delete_etud(student_list, apo)){
                         printf("Etudiant Code Apogee %d supprime !\n", apo);
-                        create("StudentList", student_list);
-                        readfile("StudentList", 1, 0);
+                        create("list", student_list);
+                        readfile("list", 1, &student_list);
                      }
                      else{
                         printf("Etudiant Code Apogee %d n'existe pas !\n", apo);
@@ -213,7 +204,7 @@ int main(){
 
                   break;
                case 5: //Rechercher
-                  if(student_list){ student_list = head;
+                  if(student_list){ 
                      option[2] = searchselect();
                      switch (option[2]){
                         case 1:
@@ -262,7 +253,7 @@ int main(){
 
                   break;
                case 4: //Tri
-                  if(student_list){ student_list = head;
+                  if(student_list){ 
                      option[2]=sortselect();
                      switch (option[2]){
                         case 1:
@@ -288,19 +279,18 @@ int main(){
 
                   break;
                case 3: //Consultation
-                  if(student_list){ student_list = head;
+                  if(student_list){ 
                      option[2]=viewselect();
                      switch (option[2]){
                         case 1:
-                           draw_table(student_list);
-                           readfile("list", 1, 0);
+                           readfile("list", 1, &student_list);
                            break;
                         case 2:
                            sortd = validlist(student_list);
                            if(!sortd) printf("Aucun etudiant dans la liste est admit !\n");
                            else{
                               create("list_admis", sortd);
-                              readfile("list_admis", 1, 0);
+                              readfile("list_admis", 1, &sortd);
                            }
                            break;
                         case 3:
@@ -311,27 +301,27 @@ int main(){
                               switch(targetfil){
                                  case 1:
                                     create("list_SMI", sortd);
-                                    readfile("list_SMI", 1, 0);
+                                    readfile("list_SMI", 1, &sortd);
                                     break;
                                  case 2:
                                     create("list_SMA", sortd);
-                                    readfile("list_SMA", 1, 0);
+                                    readfile("list_SMA", 1, &sortd);
                                     break;
                                  case 3:
                                     create("list_SMP", sortd);
-                                    readfile("list_SMP", 1, 0);
+                                    readfile("list_SMP", 1, &sortd);
                                     break;
                                  case 4:
                                     create("list_SMC", sortd);
-                                    readfile("list_SMC", 1, 0);
+                                    readfile("list_SMC", 1, &sortd);
                                     break;
                                  case 5:
                                     create("list_SVI", sortd);
-                                    readfile("list_SVI", 1, 0);
+                                    readfile("list_SVI", 1, &sortd);
                                     break;
                                  case 6:
                                     create("list_STU", sortd);
-                                    readfile("list_STU", 1, 0);
+                                    readfile("list_STU", 1, &sortd);
                                     break;
                               }
                            }
@@ -342,35 +332,25 @@ int main(){
 
                   break;
                case 2: //Modification
-                  if(student_list){ student_list = head;
+                  if(student_list){
                      option[2]=modselect();
                      switch (option[2]){
-                        case 1:
+                        case 1: //Modifier
                            modfile("list", student_list);
-                           student_list = readfile("list", 0, 1);
                            break;
-                        case 2:
+                        case 2: //Ajouter
                            do{
                               printf("Nombre d'etudiants : ");
                               scanf("%d", &edunum);
                            } while(edunum < 0);
-                           head = student_list;
-                           while(student_list){
-                              student_list= student_list->suiv;
-                           }
-                           etudiant *current = student_list;
-                           for(int i = 0; i<edunum; i++){
-                              current = ajout();
-                              current= current->suiv;
-                           }
-                           student_list = head;
+                           for(int i=0; i<edunum; i++)
+                                 ajout_fin(&student_list);
                            draw_table(student_list);
                            create("list", student_list);
-                           readfile("list", 1, 0);
                            printf("list.csv cree avec succes!\n");
                         }
                      printf("Nouvelle Liste :\n");
-                     readfile("list", 1, 0);
+                     readfile("list", 1, &student_list);
                      break;
                   }
 
@@ -378,11 +358,11 @@ int main(){
                case 1: //Creation
                      printf("Nombre d'etudiants : ");
                      scanf("%d", &edunum);
-                     for(int i = 0; i<edunum; i++){
-                        student_list = ajout();
-                     }
+                     if(student_list) free_list(&student_list);
+                     for(int i = 0; i<edunum; i++)
+                              ajout(student_list);
                      create("list", student_list);
-                     readfile("list", 1, 0);
+                     readfile("list", 1, &student_list);
                      printf("list.csv cree avec succes!\n");
 
                   break;
@@ -393,9 +373,9 @@ int main(){
                   menu_two(option);
             } break;
       }
-      student_list = head;
+      
    } while(option[1] != 0);
 
-   if(student_list) free_list(student_list);
+   if(student_list) free_list(&student_list);
    return 0;
 }

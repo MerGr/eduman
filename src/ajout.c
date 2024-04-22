@@ -20,7 +20,7 @@ date saisir_date(void){
 }
 
 int generate_apogee(int an){
-    int temp = (an % 100) * 100000 ;
+    int temp = (an % 100) * 51340 ;
     srand(time(NULL));
 
     temp += (rand() % (10) )*10000 + (rand() % (10))*1000 + (rand() % (10))*100 + (rand() % (10))*10 + rand() % (10) ;
@@ -28,13 +28,15 @@ int generate_apogee(int an){
 }
 
 void generate_academic_email(etudiant_info * etud){
-    char email[100];
-    email[0] = etud->prenom[0];
-    email[1] = '.';
+    char email[2048] = "";
+    char temp1[3];
+    temp1[0]= etud->prenom[0];
+    temp1[1]='.';
+    strcat(email ,temp1);
     strcat(email , etud->nom);
     int temp = etud->apogee % 1000 ;
     char temp_string[5] ;
-    snprintf(temp_string, 5, "%d", temp);
+    snprintf(temp_string, 10, "%d", temp);
     strcat(email , temp_string);
     strcat(email ,"@eduman.edu");
     strcat(etud->academic_email , email);
@@ -50,7 +52,7 @@ void calc_moy(etudiant_info *etud){
 }
 
 void ajout_etudiant_info(etudiant_info *etud){
-    etudiant_info * p=etud;
+    etudiant_info *p = etud;
     int isValid=0 ;
     printf("Veuillez saisir le nom et prenom : \n ");
     scanf("%s %s",etud->nom, etud->prenom);
@@ -140,11 +142,43 @@ void ajout_etudiant_info(etudiant_info *etud){
 
 }
 
-//ajout de nouvel etudiant a la fin de la liste
-etudiant *ajout(){
-    etudiant *new_etudiant=(etudiant *)malloc(sizeof(etudiant));
+//ajout
+void ajout(etudiant *debut){
+    etudiant *new_etudiant = (etudiant *)malloc(sizeof(etudiant));
+    if (new_etudiant == NULL) {
+        fprintf(stderr, "Erreur d'allocation de mémoire.\n");
+        exit(EXIT_FAILURE);
+    }
+
     ajout_etudiant_info(&new_etudiant->etud_info);
     new_etudiant->suiv = NULL;
 
-    return new_etudiant;
+    if (debut == NULL) {
+        debut = new_etudiant;
+        return;
+    }
+    else{    
+        etudiant *p = debut;
+        while (p->suiv != NULL) {
+            p = p->suiv;
+        }
+        p->suiv = new_etudiant;
+    }
+}
+
+void ajout_fin(etudiant **debut){
+    etudiant *new_etudiant = (etudiant *)malloc(sizeof(etudiant));
+    if (new_etudiant == NULL) {
+        fprintf(stderr, "Erreur d'allocation de mémoire.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    ajout_etudiant_info(&new_etudiant->etud_info);
+    new_etudiant->suiv = NULL;
+    etudiant *head = *debut;
+    
+    while(head->suiv != NULL){
+        head=head->suiv;
+    }
+    head->suiv=new_etudiant;
 }

@@ -159,13 +159,14 @@ etudiant *modifier_etud_info(etudiant* debut , int apog){
     return debut;
 }
 
-void free_list(etudiant *tofree){
-    etudiant *node = tofree;
+void free_list(etudiant **tofree){
+    etudiant *node = *tofree;
     etudiant *tmp;
 
-    while(node != NULL){
+    do{
         tmp = node;
         node = node->suiv;
         free(tmp);
-    }
+        tmp = NULL;
+    } while(node != NULL);
 }

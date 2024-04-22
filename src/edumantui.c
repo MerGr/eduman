@@ -10,7 +10,7 @@ void draw_student(etudiant_info *etud, int entryls){
    printf("+----------------------------------+---------------------------------+\n");
    printf("|\t\t\t\tEtudiant %d\n", entryls);
    printf("+----------------------------------+---------------------------------+\n");
-   printf("|\tApogee\t\t\t\t\t%d\t\t\n", etud->apogee);
+   printf("|\tApogee\t\t\t\t\t%07d\t\t\n", etud->apogee);
    printf("+----------------------------------+---------------------------------+\n");
    printf("|\tNom et Prenom\t\t\t%s %s\t\t\n",etud->nom,etud->prenom);
    printf("+----------------------------------+---------------------------------+\n");
@@ -63,8 +63,8 @@ void draw_table(etudiant *stdntlist){
    do{
       draw_student(&p->etud_info, n);
       n++;
-      if(p->suiv) p = p->suiv;
-   }while(p->suiv != NULL);
+      p = p->suiv;
+   }while(p != NULL);
 }
 
 

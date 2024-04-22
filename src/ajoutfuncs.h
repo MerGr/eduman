@@ -10,7 +10,9 @@ extern void calc_moy(etudiant_info *);
 
 extern void ajout_etudiant_info(etudiant_info *) ;
 
-extern etudiant *ajout();
+extern void ajout(etudiant *);
+
+extern void ajout_fin(etudiant **);
 
 
 

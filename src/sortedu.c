@@ -48,6 +48,17 @@ etudiant * sort_date_inscription(etudiant* debut ){
                     data = p->etud_info ;
                     p->etud_info = temp->etud_info ;
                     temp->etud_info =data ;
+                } else if (temp->etud_info.date_inscription.annee == p->etud_info.date_inscription.annee && 
+                temp->etud_info.date_inscription.mois > p->etud_info.date_inscription.mois){
+                    data = p->etud_info ;
+                    p->etud_info = temp->etud_info ;
+                    temp->etud_info =data ;
+                } else if (temp->etud_info.date_inscription.annee == p->etud_info.date_inscription.annee && 
+                temp->etud_info.date_inscription.mois == p->etud_info.date_inscription.mois &&
+                temp->etud_info.date_inscription.jour > p->etud_info.date_inscription.jour){
+                    data = p->etud_info ;
+                    p->etud_info = temp->etud_info ;
+                    temp->etud_info =data ;
                 }
             }
         }

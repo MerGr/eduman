@@ -28,7 +28,7 @@ typedef struct{
     e_filiere filiere ;
     date date_inscription ; 
     date graduation_date;
-    char academic_email[100];
+    char academic_email[2048];
     int num_of_modules;
     module modules[7] ;
     float moy;

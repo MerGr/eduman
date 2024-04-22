@@ -3,22 +3,25 @@
 #include "eduStruct.h"
 #include "srchfuncs.h"
 
-int delete_etud(etudiant *debut , int apog){
-    etudiant *temp = searchoneByApo(debut,apog) ;
-    etudiant *Q, *p=debut;
+void delete_etud(etudiant **debut , int apog){
+    etudiant *tmp = *debut, *p;
 
-    if(temp != NULL){
-        while(p != NULL){
-            Q=p;
-            p=p->suiv ;
-            if(temp == p){
-                Q->suiv = p->suiv ;
-                free(p);
-            }
-        }
-
-        return 1;
+    if(tmp && tmp->etud_info.apogee == apog){
+        if(tmp->suiv != NULL) *debut = tmp->suiv;
+        free(tmp);
+        return;
     }
 
-    return 0;
+    while (tmp && tmp->etud_info.apogee != apog){
+        p = tmp;
+        tmp = tmp->suiv;
+    }
+
+    if(!tmp)
+        return;
+    
+
+    p->suiv = tmp->suiv;
+
+    free(tmp);
 }

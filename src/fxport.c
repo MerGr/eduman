@@ -17,11 +17,11 @@ void write_to_file(FILE *writefile, etudiant *list){
    fprintf(writefile,"Email academique, Module 1, Note 1, Module 2, Note 2, Module 3, Note 3, Module 4,");
    fprintf(writefile,"Note 4, Module 5, Note 5, Module 6, Note 6, Module 7, Note 7, Moyenne\n");
    n = 1;
-   while(studntlist){
+   while(studntlist != NULL){
 
         fprintf(writefile, "%d,", n);
 
-        fprintf(writefile, "%d,", studntlist->etud_info.apogee);
+        fprintf(writefile, "%07d,", studntlist->etud_info.apogee);
 
         fprintf(writefile, "%s,%s,",studntlist->etud_info.nom,studntlist->etud_info.prenom);
 
@@ -61,7 +61,7 @@ void write_to_file(FILE *writefile, etudiant *list){
             fprintf(writefile, "%s,%.4f,", studntlist->etud_info.modules[i].module_name, studntlist->etud_info.modules[i].module_note);
     
         }
-        fprintf(writefile, "%.04f,\n", studntlist->etud_info.moy);
+        fprintf(writefile, "%.04f\n", studntlist->etud_info.moy);
 
 
         studntlist = studntlist->suiv; n++;
@@ -85,7 +85,7 @@ void create(char *filename, etudiant *studntlist){
     fclose(file);
 }
 
-etudiant *readfile(char *filename, int echototerm, int import) {
+void readfile(char *filename, int echototerm, etudiant **out) {
     char name[strlen(filename) + 5], line[MAX_SIZE];
     snprintf(name, sizeof(name), "%s.csv", filename);
 
@@ -95,10 +95,10 @@ etudiant *readfile(char *filename, int echototerm, int import) {
     if (file != NULL){
 
         fgets(line, sizeof(line), file);
-        etudiant *new_etudiant = (etudiant *) malloc(sizeof(etudiant));
 
-        etudiant *list = new_etudiant;
+        etudiant *list = NULL;
         while (fgets(line, sizeof(line), file) != NULL){
+            etudiant *new_etudiant = (etudiant *) malloc(sizeof(etudiant));
             strtok(line, ","); // Skip N
             
             sscanf(strtok(NULL, ","), "%d,", &new_etudiant->etud_info.apogee);
@@ -139,32 +139,32 @@ etudiant *readfile(char *filename, int echototerm, int import) {
             }
             sscanf(strtok(NULL, ","), "%f", &new_etudiant->etud_info.moy);
             
+            new_etudiant->suiv = NULL;
 
-            new_etudiant->suiv = (etudiant *) malloc(sizeof(etudiant));
-                if (!new_etudiant->suiv) {
-                    fprintf(stderr, "Memory allocation failed\n");
-                    exit(EXIT_FAILURE);
+            if(list == NULL){
+                list = new_etudiant;
+            }
+            else{
+                etudiant *p = list;
+                while (p->suiv != NULL) {
+                    p = p->suiv;
                 }
-            new_etudiant = new_etudiant->suiv;
+                p->suiv = new_etudiant;
+            }
+
             n++;
         }
 
-        // DIRTY FIX : this is horrible, but i don't have time for a proper fix, removes unnecessary last node
-        if(n>1){
-            free(new_etudiant);
+        if(echototerm){
+            draw_table(list);
         }
-        // end of horribleness
-
-        if(echototerm) draw_table(list);
 
         entryls = n-1;
 
         fclose(file);
 
-        if(import) return list;
+        *out = list;
     }
-
-    return NULL;
 }
 
 
@@ -175,5 +175,4 @@ void modfile(char *filename, etudiant *studntlist){
     scanf("%d", &apo);
     studntlist = modifier_etud_info(studntlist, (int)apo);
     create(filename, studntlist);
-    readfile(filename, 1, 0);
 }

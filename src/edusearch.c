@@ -22,7 +22,7 @@ etudiant *srchByNom(etudiant *etudlist, char *name){
          srt = srt->suiv;
       }
       etudlist = etudlist->suiv;
-   } while(etudlist->suiv);
+   } while(etudlist);
 
    if(found) return head;
    else return NULL;
@@ -43,7 +43,7 @@ etudiant *srchByPrenom(etudiant *etudlist, char *name){
          srt = srt->suiv;
       }
       etudlist = etudlist->suiv;
-   } while(etudlist->suiv);
+   } while(etudlist);
 
    if(found) return head;
    else return NULL;
@@ -66,7 +66,7 @@ etudiant *srchByDate(etudiant *etudlist, date targetDate){
          srt = srt->suiv;
       }
       etudlist = etudlist->suiv;
-   } while(etudlist->suiv);
+   } while(etudlist);
 
    if(found) return head;
    else return NULL;
@@ -87,7 +87,7 @@ etudiant *validlist(etudiant *etudlist){
          srt = srt->suiv;
       }
       etudlist = etudlist->suiv;
-   } while(etudlist->suiv);
+   } while(etudlist);
 
    if(found) return head;
    else return NULL;
@@ -108,7 +108,7 @@ etudiant *filierelist(etudiant *etudlist, e_filiere targetfiliere){
          srt = srt->suiv;
       }
       etudlist = etudlist->suiv;
-   } while(etudlist->suiv);
+   } while(etudlist);
 
    if(found) return head;
    else return NULL;
