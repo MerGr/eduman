@@ -151,7 +151,7 @@ void ajout_etudiant_info(etudiant_info *etud){
 }
 
 //ajout
-void ajout(etudiant *debut){
+void ajout(etudiant **debut){
     etudiant *new_etudiant = (etudiant *)malloc(sizeof(etudiant));
     if (new_etudiant == NULL) {
         fprintf(stderr, "Erreur d'allocation de mémoire.\n");
@@ -161,12 +161,11 @@ void ajout(etudiant *debut){
     ajout_etudiant_info(&new_etudiant->etud_info);
     new_etudiant->suiv = NULL;
 
-    if (debut == NULL) {
-        debut = new_etudiant;
-        return;
+    if (*debut == NULL) {
+        *debut = new_etudiant;
     }
     else{    
-        etudiant *p = debut;
+        etudiant *p = *debut;
         while (p->suiv != NULL) {
             p = p->suiv;
         }

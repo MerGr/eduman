@@ -11,24 +11,26 @@
 #include "srchfuncs.h"
 
 void delete_etud(etudiant **debut , int apog){
-    etudiant *tmp = *debut, *p;
+    etudiant *tmp = *debut, *p = tmp;
 
-    if(tmp && tmp->etud_info.apogee == apog){
-        if(tmp->suiv != NULL) *debut = tmp->suiv;
-        free(tmp);
-        return;
+    if(tmp->etud_info.apogee == apog){
+            if(tmp->suiv) *debut = tmp->suiv;
+            else *debut = NULL;
+            free(tmp);
+    } 
+    else {
+        do{
+            if(tmp->suiv->etud_info.apogee == apog){
+                p = tmp;
+                tmp = tmp->suiv;
+                if(tmp->suiv) p->suiv = tmp->suiv;
+                else p->suiv = NULL;
+                free(tmp);
+                break;
+            }
+
+            tmp = tmp->suiv;
+
+        } while(tmp);
     }
-
-    while (tmp && tmp->etud_info.apogee != apog){
-        p = tmp;
-        tmp = tmp->suiv;
-    }
-
-    if(!tmp)
-        return;
-    
-
-    p->suiv = tmp->suiv;
-
-    free(tmp);
 }

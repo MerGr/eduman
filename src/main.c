@@ -46,9 +46,7 @@ int main(){
                   if(student_list){
                      printf("Numero Apogee d'etudiant : ");
                      scanf("%d", &apo);
-                     delete_etud(student_list, apo);
-                     if(!student_list) printf("Erreur !\n");
-                     else printf("Etudiant Code Apogee %d supprime !\n", apo);
+                     delete_etud(&student_list, apo);
 
                      break;
                   }
@@ -169,7 +167,7 @@ int main(){
                   scanf("%d", &edunum);
                   if(student_list) free_list(&student_list);
                   for(int i = 0; i<edunum; i++)
-                        ajout(student_list);
+                        ajout(&student_list);
                   draw_table(student_list);
                   break;
                case 0: //Quitter
@@ -199,14 +197,9 @@ int main(){
                   if(student_list){ 
                      printf("Numero Apogee d'etudiant : ");
                      scanf("%d", &apo);
-                     if(delete_etud(student_list, apo)){
-                        printf("Etudiant Code Apogee %d supprime !\n", apo);
-                        create("list", student_list);
-                        readfile("list", 1, &student_list);
-                     }
-                     else{
-                        printf("Etudiant Code Apogee %d n'existe pas !\n", apo);
-                     }
+                     delete_etud(&student_list, apo);
+                     create("list", student_list);
+                     readfile("list", 1, &student_list);
                      break;
                   }
 
@@ -352,8 +345,7 @@ int main(){
                               scanf("%d", &edunum);
                            } while(edunum < 0);
                            for(int i=0; i<edunum; i++)
-                                 ajout_fin(&student_list);
-                           //TODO : this is horrible, this doesn't work, must be fixed
+                                 ajout(&student_list);
                            create("list", student_list);
                            printf("list.csv cree avec succes!\n");
                         }
@@ -368,7 +360,7 @@ int main(){
                      scanf("%d", &edunum);
                      if(student_list) free_list(&student_list);
                      for(int i = 0; i<edunum; i++)
-                              ajout(student_list);
+                              ajout(&student_list);
                      create("list", student_list);
                      readfile("list", 1, &student_list);
                      printf("list.csv cree avec succes!\n");
