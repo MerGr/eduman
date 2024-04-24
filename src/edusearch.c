@@ -94,7 +94,7 @@ etudiant *validlist(etudiant *etudlist){
          srt = srt->suiv;
       }
       etudlist = etudlist->suiv;
-   } while(etudlist);
+   } while(etudlist->suiv);
 
    if(found) return head;
    else return NULL;
@@ -115,7 +115,7 @@ etudiant *filierelist(etudiant *etudlist, e_filiere targetfiliere){
          srt = srt->suiv;
       }
       etudlist = etudlist->suiv;
-   } while(etudlist);
+   } while(etudlist->suiv);
 
    if(found) return head;
    else return NULL;
