@@ -13,22 +13,13 @@
 void delete_etud(etudiant **debut , int apog){
     etudiant *tmp = *debut, *p;
 
-    if(tmp && tmp->etud_info.apogee == apog){
-        if(tmp->suiv != NULL) *debut = tmp->suiv;
-        free(tmp);
-        return;
-    }
-
-    while (tmp && tmp->etud_info.apogee != apog){
+    do{
         p = tmp;
         tmp = tmp->suiv;
-    }
-
-    if(!tmp)
-        return;
-    
-
-    p->suiv = tmp->suiv;
-
-    free(tmp);
+        if(tmp && tmp->etud_info.apogee == apog){
+            if(tmp->suiv != NULL) p->suiv = tmp->suiv;
+            free(tmp);
+            break;
+        }
+    } while (tmp && tmp->etud_info.apogee != apog);
 }

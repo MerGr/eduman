@@ -169,7 +169,7 @@ int main(){
                   scanf("%d", &edunum);
                   if(student_list) free_list(&student_list);
                   for(int i = 0; i<edunum; i++)
-                        ajout(student_list);
+                        ajout(&student_list);
                   draw_table(student_list);
                   break;
                case 0: //Quitter
@@ -368,7 +368,7 @@ int main(){
                      scanf("%d", &edunum);
                      if(student_list) free_list(&student_list);
                      for(int i = 0; i<edunum; i++)
-                              ajout(student_list);
+                              ajout(&student_list);
                      create("list", student_list);
                      readfile("list", 1, &student_list);
                      printf("list.csv cree avec succes!\n");
