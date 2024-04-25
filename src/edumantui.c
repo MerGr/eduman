@@ -123,7 +123,7 @@ void menu_two(int *out){
       "     **                              Bienvenue a Eduman !                                     **         \n"
       "     **                            Choisir votre operation :                                  **         \n"
       "     **                                                                                       **         \n"
-      "     **          1- Creer une base de donnees                                                 **         \n"
+      "     **          1- Creer une base de donnees  (ATTENTION ! Ecrase Base Existante)            **         \n"
       "     **          2- Modifier la base                                                          **         \n"
       "     **          3- Consulter la base                                                         **         \n"
       "     **          4- Trier la base                                                             **         \n"
@@ -223,7 +223,7 @@ e_filiere filselect(){
 
 int modselect(){
    int out;
-   /*do{
+   do{
       puts(
          "     *******************************************************************************************         \n"
          "     **                                 Modification                                          **         \n"
@@ -235,8 +235,6 @@ int modselect(){
          "     *******************************************************************************************         \n"
       );
       printf("Votre choix : "); scanf("%d", &out);
-   } while(out > 2 || out <= 0);*/
-   //TODO : Ajout, this doesn't work, must be fixed
-   out = 1;
+   } while(out > 2 || out <= 0);
    return out;
 }

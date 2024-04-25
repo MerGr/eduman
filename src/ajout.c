@@ -183,9 +183,14 @@ void ajout_fin(etudiant **debut){
     ajout_etudiant_info(&new_etudiant->etud_info);
     new_etudiant->suiv = NULL;
     etudiant *head = *debut;
+    
+    if(*debut == NULL){
+        *debut = new_etudiant;
 
-    while(head->suiv != NULL){
-        head=head->suiv;
+    } else {
+        while(head->suiv != NULL){
+            head=head->suiv;
+        }
+        head->suiv=new_etudiant;
     }
-    head->suiv=new_etudiant;
 }

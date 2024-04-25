@@ -96,6 +96,8 @@ etudiant *validlist(etudiant *etudlist){
       etudlist = etudlist->suiv;
    } while(etudlist->suiv);
 
+   free(srt); //UNECESSARY LAST NODE
+
    if(found) return head;
    else return NULL;
 }
@@ -116,6 +118,8 @@ etudiant *filierelist(etudiant *etudlist, e_filiere targetfiliere){
       }
       etudlist = etudlist->suiv;
    } while(etudlist->suiv);
+
+   free(srt); //UNECESSARY LAST NODE
 
    if(found) return head;
    else return NULL;

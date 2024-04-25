@@ -79,9 +79,22 @@ void write_to_file(FILE *writefile, etudiant *list){
 void create(char *filename, etudiant *studntlist){
     etudiant *p = studntlist;
     char name[strlen(filename) + 5];
-    snprintf( name, sizeof(name), "%s.csv", filename);
+    //char old_name[strlen(filename) + 9];
+    snprintf(name, sizeof(name), "%s.csv", filename);
+    //snprintf(old_name, sizeof(old_name), "%s_old.csv", filename);
 
-    FILE *file = fopen(name, "w+");
+    FILE *file;
+
+    /*file = fopen(name, "r");
+    if(file != NULL){
+        fclose(file);
+        rename(name, old_name);
+    }
+    else{
+        fclose(file);
+    } */
+
+    file = fopen(name, "w+");
     if (file != NULL){
         write_to_file(file, p);
     }

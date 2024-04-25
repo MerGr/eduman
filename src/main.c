@@ -62,21 +62,21 @@ int main(){
                            srchtarget = searchoneByApo(student_list, apo);
                            if(!srchtarget) {printf("%d pas trouve !\n", apo);}
                            else {draw_student(&srchtarget->etud_info, 1);}
-
+                           if(srchtarget) free_list(&srchtarget);
                            break;
                         case 2:
                            printf("Nom a chercher : "); scanf("%[^\n]s", srchstr);
                            srchtarget = srchByNom(student_list, srchstr);
                            if(!srchtarget) printf("%s pas trouve!\n", srchstr);
                            else draw_table(srchtarget);
-
+                           if(srchtarget) free_list(&srchtarget);
                            break;
                         case 3:
                            printf("Prenom a chercher : "); scanf("%[^\n]s", srchstr);
                            srchtarget = srchByPrenom(student_list, srchstr);
                            if(!srchtarget) printf("%s pas trouve!\n", srchstr);
                            else draw_table(srchtarget);
-
+                           if(srchtarget) free_list(&srchtarget);
                            break;
                         case 4:
                            printf("Date inscription a chercher (format : DD/MM/YYYY) : ");
@@ -84,6 +84,7 @@ int main(){
                            srchtarget = srchByDate(student_list, targetdate);
                            if(!srchtarget) printf("Date pas trouve!\n");
                            else draw_table(srchtarget);
+                           if(srchtarget) free_list(&srchtarget);
 
                            break;
                      }
@@ -124,14 +125,14 @@ int main(){
                            sortd = validlist(student_list);
                            if(!sortd) printf("Aucun etudiant dans la liste est admit !\n");
                            else draw_table(sortd);
-
+                           if(sortd) free_list(&sortd);
                            break;
                         case 3:
                            targetfil = filselect();
                            sortd = filierelist(student_list, targetfil);
                            if(!sortd) printf("Aucun etudiant dans la filiere specifie a ete trouve !\n");
                            else draw_table(sortd);
-
+                           if(sortd) free_list(&sortd);
                            break;
                      }
                   }
@@ -146,7 +147,7 @@ int main(){
                            scanf("%d", &apo);
                            student_list = modifier_etud_info(student_list, (int)apo);
                            break;
-                        case 5:
+                        case 2:
                            do{
                               printf("Nombre d'etudiants : ");
                               scanf("%d", &edunum);
@@ -154,7 +155,6 @@ int main(){
                            for(int i = 0; i<edunum; i++){
                               ajout_fin(&student_list);
                            }
-                           //TODO : this is horrible, this doesn't work, must be fixed
                         }
                      printf("Nouvelle Liste :\n");
                      draw_table(student_list);
@@ -217,6 +217,7 @@ int main(){
                               snprintf(srchstr, 50, "%d", apo);
                               create(srchstr, srchtarget);
                               printf("%d.csv cree\n", apo);
+                              if(srchtarget) free_list(&srchtarget);
                            }
                            break;
                         case 2:
@@ -226,6 +227,7 @@ int main(){
                            else{
                               create(srchstr, srchtarget);
                               printf("%s.csv cree\n", srchstr);
+                              if(srchtarget) free_list(&srchtarget);
                            }
 
                            break;
@@ -236,6 +238,7 @@ int main(){
                            else{
                               create(srchstr, srchtarget);
                               printf("%s.csv cree\n", srchstr);
+                              if(srchtarget) free_list(&srchtarget);
                            }
                            break;
                         case 4:
@@ -247,6 +250,7 @@ int main(){
                               snprintf(srchstr, 50, "%02u-%02d-%04u", targetdate.jour, targetdate.mois, targetdate.annee);
                               create(srchstr, srchtarget);
                               printf("%s.csv cree\n", srchstr);
+                              if(srchtarget) free_list(&srchtarget);
                            }
                            break;
                      }
@@ -292,6 +296,7 @@ int main(){
                            else{
                               create("list_admis", sortd);
                               readfile("list_admis", 1, &sortd);
+                              if(sortd) free_list(&sortd);
                            }
                            break;
                         case 3:
@@ -325,6 +330,8 @@ int main(){
                                     readfile("list_STU", 1, &sortd);
                                     break;
                               }
+
+                              if(sortd) free_list(&sortd);
                            }
 
                            break;
@@ -339,13 +346,13 @@ int main(){
                         case 1: //Modifier
                            modfile("list", student_list);
                            break;
-                        case 5: //Ajouter
+                        case 2: //Ajouter
                            do{
                               printf("Nombre d'etudiants : ");
                               scanf("%d", &edunum);
                            } while(edunum < 0);
                            for(int i=0; i<edunum; i++)
-                                 ajout(&student_list);
+                                 ajout_fin(&student_list);
                            create("list", student_list);
                            printf("list.csv cree avec succes!\n");
                         }
@@ -366,7 +373,7 @@ int main(){
                      printf("list.csv cree avec succes!\n");
 
                   break;
-               case 0: //Retour
+               case 0: //Exit
                   break;
                default:
                   printf("ERREUR ! BASE DE DONNEES NON EXISTANTE");

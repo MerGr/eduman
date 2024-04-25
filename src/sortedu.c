@@ -6,6 +6,7 @@
 //  EDUMAN
 //
 #include <stdio.h>
+#include <stdlib.h>
 #include "eduStruct.h"
 
 // ordre croissant
@@ -22,6 +23,8 @@ etudiant *sort_apogee(etudiant* debut ){
                 }
             }
         }
+
+        free(p); //UNECESSARY LAST NODE
     }
     return debut;
 }
@@ -40,6 +43,8 @@ etudiant * sort_moy(etudiant* debut ){
                 }
             }
         }
+
+        free(p); //UNECESSARY LAST NODE
     }
     return debut;
 }
@@ -69,6 +74,10 @@ etudiant * sort_date_inscription(etudiant* debut ){
                 }
             }
         }
+
+        free(p); //UNECESSARY LAST NODE
     }
+
+
     return debut;
 }
