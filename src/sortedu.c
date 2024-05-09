@@ -20,7 +20,7 @@ etudiant * sort_apogee(etudiant* debut ){
 }
 
 //ordre decroissant
-etudiant * sort_moy(etudiant* debut ){
+etudiant *sort_moy(etudiant* debut ){
     etudiant *p=debut  , *temp;
     etudiant_info data ;
     if(debut != NULL){
@@ -38,7 +38,7 @@ etudiant * sort_moy(etudiant* debut ){
 }
 
 //ordre decroissant
-etudiant * sort_date_inscription(etudiant* debut ){
+etudiant *sort_date_inscription(etudiant* debut ){
     etudiant *p=debut  , *temp;
     etudiant_info data ;
     if(debut != NULL){

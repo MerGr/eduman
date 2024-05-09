@@ -2,9 +2,9 @@ OBJS	= obj/ajout.o obj/deledu.o obj/edumantui.o obj/edusearch.o obj/modedu.o obj
 SOURCE	= src/ajout.c src/deledu.c src/edumantui.c src/edusearch.c src/modedu.c src/sortedu.c src/fxport.c src/main.c src/searchone.c
 HEADER	= src/filemanip.h src/srchfuncs.h src/ajoutfuncs.h src/delfuncs.h src/eduStruct.h src/modfuncs.h src/sortfuncs.h src/tui.h
 SRCDIR	:= src
-BUILDDIR := obj
-TARGETDIR := bin
-OUT	= ./$(TARGETDIR)/eduman
+OBJDIR := obj
+BUILDDIR := bin
+OUT	= ./$(BUILDDIR)/eduman
 FLAGS	= -g -c -Wall
 LFLAGS	=
 CC	= gcc
@@ -12,8 +12,8 @@ CC	= gcc
 all: directories $(OUT)
 
 directories:
-	@mkdir -p $(TARGETDIR)
 	@mkdir -p $(BUILDDIR)
+	@mkdir -p $(OBJDIR)
 
 $(OUT): $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
@@ -46,4 +46,7 @@ obj/searchone.o: src/searchone.c
 	$(CC) $(FLAGS) src/searchone.c -o obj/searchone.o
 
 clean:
-	rm -rf $(BUILDDIR) $(TARGETDIR)
+	rm -rf $(OBJDIR) $(BUILDDIR)
+
+clean:
+	rm -rf $(BUILDDIR)
