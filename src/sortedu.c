@@ -8,67 +8,105 @@
 #include <stdio.h>
 #include "eduStruct.h"
 
-// ordre croissant
-etudiant *sort_apogee(etudiant* debut ){
-    etudiant *p=debut  , *temp;
-    etudiant_info data ;
-    if(debut != NULL){
-        for(p = debut ; p->suiv != NULL ; p = p->suiv ){
-            for(temp = p->suiv ; temp != NULL ; temp = temp->suiv ){
-                if( temp->etud_info.apogee < p->etud_info.apogee){
-                    data = p->etud_info ;
-                    p->etud_info = temp->etud_info ;
-                    temp->etud_info =data ;
-                }
+
+//ALGORITHME TRI PAR FUSION
+etudiant *merge(etudiant *left, etudiant *right, int option) {
+    etudiant *result = NULL;
+
+    if (left == NULL)
+        return right;
+    else if (right == NULL)
+        return left;
+    switch(option){
+        case 1: //Tri croissant Apogee
+            if (left->etud_info.apogee <= right->etud_info.apogee) {
+                result = left;
+                result->suiv = merge(left->suiv, right, 1);
+            } else {
+                result = right;
+                result->suiv = merge(left, right->suiv, 1);
             }
-        }
+            break;
+        case 2: //Tri croissant moyenne
+            if (left->etud_info.moy <= right->etud_info.moy) {
+                result = left;
+                result->suiv = merge(left->suiv, right, 2);
+            } else {
+                result = right;
+                result->suiv = merge(left, right->suiv, 2);
+            }
+            break;
+        case 3: //Tri croissant Date Inscription
+            if(left->etud_info.date_inscription.annee <= right->etud_info.date_inscription.annee ||
+                (left->etud_info.date_inscription.annee == right->etud_info.date_inscription.annee && 
+                left->etud_info.date_inscription.mois <= right->etud_info.date_inscription.mois) ||
+                (left->etud_info.date_inscription.annee == right->etud_info.date_inscription.annee && 
+                left->etud_info.date_inscription.mois == right->etud_info.date_inscription.mois &&
+                left->etud_info.date_inscription.jour <= right->etud_info.date_inscription.jour)
+                ){
+                    result = left;
+                    result->suiv = merge(left->suiv, right, 3);
+            } else {
+                result = right;
+                result->suiv = merge(left, right->suiv, 2);
+            }
     }
-    return debut;
+
+    return result;
+}
+
+etudiant *sort_apogee(etudiant *debut){
+    if (debut == NULL || debut->suiv == NULL)
+        return debut;
+
+    etudiant *middle = debut;
+    etudiant *end = debut->suiv;
+
+    while (end != NULL && end->suiv != NULL) {
+        middle = middle->suiv;
+        end = end->suiv->suiv;
+    }
+
+    etudiant *right = middle->suiv;
+    middle->suiv = NULL;
+
+    return merge(sort_apogee(debut), sort_apogee(right), 1);
 }
 
 //ordre decroissant
 etudiant *sort_moy(etudiant* debut ){
-    etudiant *p=debut  , *temp;
-    etudiant_info data ;
-    if(debut != NULL){
-        for(p = debut ; p->suiv != NULL ; p = p->suiv ){
-            for(temp = p->suiv ; temp != NULL ; temp = temp->suiv ){
-                if( temp->etud_info.moy > p->etud_info.moy){
-                    data = p->etud_info ;
-                    p->etud_info = temp->etud_info ;
-                    temp->etud_info =data ;
-                }
-            }
-        }
+    if (debut == NULL || debut->suiv == NULL)
+        return debut;
+
+    etudiant *middle = debut;
+    etudiant *end = debut->suiv;
+
+    while (end != NULL && end->suiv != NULL) {
+        middle = middle->suiv;
+        end = end->suiv->suiv;
     }
-    return debut;
+
+    etudiant *right = middle->suiv;
+    middle->suiv = NULL;
+
+    return merge(sort_moy(debut), sort_moy(right), 2);
 }
 
 //ordre decroissant
 etudiant *sort_date_inscription(etudiant* debut ){
-    etudiant *p=debut  , *temp;
-    etudiant_info data ;
-    if(debut != NULL){
-        for(p = debut ; p->suiv != NULL ; p = p->suiv ){
-            for(temp = p->suiv ; temp != NULL ; temp = temp->suiv ){
-                if( temp->etud_info.date_inscription.annee > p->etud_info.date_inscription.annee){
-                    data = p->etud_info ;
-                    p->etud_info = temp->etud_info ;
-                    temp->etud_info =data ;
-                } else if (temp->etud_info.date_inscription.annee == p->etud_info.date_inscription.annee && 
-                temp->etud_info.date_inscription.mois > p->etud_info.date_inscription.mois){
-                    data = p->etud_info ;
-                    p->etud_info = temp->etud_info ;
-                    temp->etud_info =data ;
-                } else if (temp->etud_info.date_inscription.annee == p->etud_info.date_inscription.annee && 
-                temp->etud_info.date_inscription.mois == p->etud_info.date_inscription.mois &&
-                temp->etud_info.date_inscription.jour > p->etud_info.date_inscription.jour){
-                    data = p->etud_info ;
-                    p->etud_info = temp->etud_info ;
-                    temp->etud_info =data ;
-                }
-            }
-        }
+    if (debut == NULL || debut->suiv == NULL)
+        return debut;
+
+    etudiant *middle = debut;
+    etudiant *end = debut->suiv;
+
+    while (end != NULL && end->suiv != NULL) {
+        middle = middle->suiv;
+        end = end->suiv->suiv;
     }
-    return debut;
+
+    etudiant *right = middle->suiv;
+    middle->suiv = NULL;
+
+    return merge(sort_date_inscription(debut), sort_date_inscription(right), 3);
 }

@@ -48,5 +48,5 @@ obj/searchone.o: src/searchone.c
 clean:
 	rm -rf $(OBJDIR) $(BUILDDIR)
 
-clean:
+uninstall:
 	rm -rf $(BUILDDIR)
