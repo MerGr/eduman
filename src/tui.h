@@ -1,3 +1,10 @@
+//
+//  GRAOUI ABDERRAHMANE - 2023152
+//  
+//  EL AMLI Naima - 1717283
+//
+//  EDUMAN
+//
 /***********************************
  *
  *           tui.h
@@ -6,11 +13,12 @@
  * *********************************/
 #include "eduStruct.h"
 
-extern void draw_line(int);
 extern void draw_table(etudiant *);
-extern void draw_student(etudiant_info *);
-extern void menu(unsigned int *);
-extern unsigned int searchselect();
-extern unsigned int sortselect();
-extern unsigned int viewselect();
+extern void draw_student(etudiant_info *, int);
+extern void menu_one(int *);
+extern void menu_two(int *);
+extern int searchselect();
+extern int sortselect();
+extern int viewselect();
+extern int modselect();
 extern e_filiere filselect();

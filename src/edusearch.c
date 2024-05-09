@@ -1,3 +1,10 @@
+//
+//  GRAOUI ABDERRAHMANE - 2023152
+//  
+//  EL AMLI Naima - 1717283
+//
+//  EDUMAN
+//
 /****************************************
  *                edusearch.c
  *    Search etudiant by name/enrolldate
@@ -7,95 +14,110 @@
 #include <string.h>
 #include <stdlib.h>
 
-etudiant *srchByNom(etudiant *etud_info, char *name){
+etudiant *srchByNom(etudiant *etudlist, char *name){
    etudiant *nxt, *srt, *head;
+   int found = 0;
 
    srt = (etudiant *) malloc(sizeof(etudiant));
    head = srt;
    do{
-      if(!(strcasecmp(etud_info->etud_info.nom, name))){
-         srt->etud_info = etud_info->etud_info;
+      if(!(strcasecmp(etudlist->etud_info.nom, name))){
+         found = 1;
+         srt->etud_info = etudlist->etud_info;
          nxt = (etudiant *) malloc(sizeof(etudiant));
          srt->suiv = nxt;
          srt = srt->suiv;
       }
-      etud_info = etud_info->suiv;
-   } while(etud_info->suiv != NULL);
+      etudlist = etudlist->suiv;
+   } while(etudlist);
 
-   return head;
+   if(found) return head;
+   else return NULL;
 }
 
-etudiant *srchByPrenom(etudiant *etud_info, char *name){
+etudiant *srchByPrenom(etudiant *etudlist, char *name){
    etudiant *nxt, *srt, *head;
+   int found = 0;
 
    srt = (etudiant *) malloc(sizeof(etudiant));
    head = srt;
    do{
-      if(!(strcasecmp(etud_info->etud_info.prenom, name))){
-         srt->etud_info = etud_info->etud_info;
+      if(!(strcasecmp(etudlist->etud_info.prenom, name))){
+         found = 1;
+         srt->etud_info = etudlist->etud_info;
          nxt = (etudiant *) malloc(sizeof(etudiant));
          srt->suiv = nxt;
          srt = srt->suiv;
       }
-      etud_info = etud_info->suiv;
-   } while(etud_info->suiv != NULL);
+      etudlist = etudlist->suiv;
+   } while(etudlist);
 
-   return head;
+   if(found) return head;
+   else return NULL;
 }
 
-etudiant *srchByDate(etudiant *etud_info, date targetDate){
+etudiant *srchByDate(etudiant *etudlist, date targetDate){
    etudiant *nxt, *srt, *head;
+   int found = 0;
 
    srt = (etudiant *) malloc(sizeof(etudiant));
    head = srt;
    do{
-      if(etud_info->etud_info.date_inscription.jour == targetDate.jour
-         && etud_info->etud_info.date_inscription.mois == targetDate.mois
-         && etud_info->etud_info.date_inscription.annee == targetDate.annee){
-         srt->etud_info = etud_info->etud_info;
+      if(etudlist->etud_info.date_inscription.jour == targetDate.jour
+         && etudlist->etud_info.date_inscription.mois == targetDate.mois
+         && etudlist->etud_info.date_inscription.annee == targetDate.annee){
+         found = 1;
+         srt->etud_info = etudlist->etud_info;
          nxt = (etudiant *) malloc(sizeof(etudiant));
          srt->suiv = nxt;
          srt = srt->suiv;
       }
-      etud_info = etud_info->suiv;
-   } while(etud_info->suiv != NULL);
+      etudlist = etudlist->suiv;
+   } while(etudlist);
 
-   return head;
+   if(found) return head;
+   else return NULL;
 }
 
-etudiant *validlist(etudiant *etud_info){
+etudiant *validlist(etudiant *etudlist){
    etudiant *nxt, *srt, *head;
+   int found = 0;
 
    srt = (etudiant *) malloc(sizeof(etudiant));
    head = srt;
    do{
-      if(etud_info->etud_info.moy >= 10.){
-         srt->etud_info = etud_info->etud_info;
+      if(etudlist->etud_info.moy >= 10){
+         found = 1;
+         srt->etud_info = etudlist->etud_info;
          nxt = (etudiant *) malloc(sizeof(etudiant));
          srt->suiv = nxt;
          srt = srt->suiv;
       }
-      etud_info = etud_info->suiv;
-   } while(etud_info->suiv != NULL);
+      etudlist = etudlist->suiv;
+   } while(etudlist->suiv);
 
-   return head;
+   if(found) return head;
+   else return NULL;
 }
 
-etudiant *filierelist(etudiant *etud_info, e_filiere targetfiliere){
+etudiant *filierelist(etudiant *etudlist, e_filiere targetfiliere){
    etudiant *nxt, *srt, *head;
+   int found = 0;
 
    srt = (etudiant *) malloc(sizeof(etudiant));
    head = srt;
    do{
-      if(etud_info->etud_info.filiere == targetfiliere){
-         srt->etud_info = etud_info->etud_info;
+      if(etudlist->etud_info.filiere == targetfiliere){
+         found = 1;
+         srt->etud_info = etudlist->etud_info;
          nxt = (etudiant *) malloc(sizeof(etudiant));
          srt->suiv = nxt;
          srt = srt->suiv;
       }
-      etud_info = etud_info->suiv;
-   } while(etud_info->suiv != NULL);
+      etudlist = etudlist->suiv;
+   } while(etudlist->suiv);
 
-   return head;
+   if(found) return head;
+   else return NULL;
 }
 

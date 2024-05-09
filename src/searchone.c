@@ -1,3 +1,10 @@
+//
+//  GRAOUI ABDERRAHMANE - 2023152
+//  
+//  EL AMLI Naima - 1717283
+//
+//  EDUMAN
+//
 /******************************************
  *
  *                searchone
@@ -9,13 +16,11 @@
 #include "srchfuncs.h"
 #include "eduStruct.h"
 etudiant *searchoneByApo(etudiant *start, int targetApo){
-   do{
+   while(start){
       if(start->etud_info.apogee == targetApo)
-         return start;
-      else if(start->suiv != NULL) 
-         start = start->suiv;
-      
-   } while(start->suiv != NULL);
+         break;
+      start = start->suiv;  
+   };
 
-   return start->suiv;
+   return start;
 }

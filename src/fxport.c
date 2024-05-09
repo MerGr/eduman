@@ -1,80 +1,89 @@
+//
+//  GRAOUI ABDERRAHMANE - 2023152
+//  
+//  EL AMLI Naima - 1717283
+//
+//  EDUMAN
+//
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "eduStruct.h"
 #include "modfuncs.h"
 #include "filemanip.h"
+#include "ajoutfuncs.h"
+#include "tui.h"
 
 #define MAX_SIZE 2048
 int entryls;
 
-void fdraw_line(FILE *writefile, int w){
-   for(int i = 0; i <=w; i++)
-      fprintf( writefile, "-");
-   fprintf( writefile, "\n");
-}
-
-void write_to_file(FILE *writefile, etudiant *studntlist){
-   int n, i, tabw = strlen("|  | Apogee |      Nom      |      Prenom      | Genre | Filiere | date d'inscription | date de graduation |     Email Academique     |    Module 1    | Note 1 |   Module 2   | Note 2 |   Module 3    | Note 3 |    Module 4   | Note 4 |  Module 5   | Note 5 |    Module 6    | Note 6 |    Module 7    | Note 7 | Moyenne |");
-   fseek (writefile, 0, SEEK_END);
-   unsigned int filesize = ftell(writefile);
-
-   if(filesize == 0){
-    fdraw_line(writefile, tabw);
-    fprintf( writefile, "|  | Apogee |      Nom      |      Prenom      | Genre | Filiere | date d'inscription | date de graduation |     Email Academique     |    Module 1    | Note 1 |   Module 2   | Note 2 |   Module 3    | Note 3 |    Module 4   | Note 4 |  Module 5   | Note 5 |    Module 6    | Note 6 |    Module 7    | Note 7 | Moyenne |\n");
-   }
-   fdraw_line(writefile, tabw);
+void write_to_file(FILE *writefile, etudiant *list){
+   etudiant *studntlist = list;
+   int n;
+   fprintf(writefile,"N, Apogee, Nom, Prenom, Genre, Filiere, Date d'inscription, Date de graduation,");
+   fprintf(writefile,"Email academique, Module 1, Note 1, Module 2, Note 2, Module 3, Note 3, Module 4,");
+   fprintf(writefile,"Note 4, Module 5, Note 5, Module 6, Note 6, Module 7, Note 7, Moyenne\n");
    n = 1;
    while(studntlist != NULL){
-      fprintf( writefile, "| %d |", n);
-      fprintf( writefile, " %d |", studntlist->etud_info.apogee);
-      fprintf( writefile, " %s |", studntlist->etud_info.nom);
-      fprintf( writefile, " %s |", studntlist->etud_info.prenom);
-      if(studntlist->etud_info.genre == 1)
-         fprintf( writefile, " Femme |");
-      else
-         fprintf( writefile, " Homme |");
-      switch(studntlist->etud_info.filiere){
-         case 1:
-            fprintf( writefile, " SMI |");
-            break;
-         case 2:
-            fprintf( writefile, " SMA |");
-            break;
-         case 3:
-            fprintf( writefile, " SMP |");
-            break;
-         case 4:
-            fprintf( writefile, " SMC |");
-            break;
-         case 5:
-            fprintf( writefile, " SVI |");
-            break;
-         case 6:
-            fprintf( writefile, " STU |");
-            break;
-      }
-      fprintf( writefile, " %02u/%02d/%04u |", studntlist->etud_info.date_inscription.jour, studntlist->etud_info.date_inscription.mois, studntlist->etud_info.date_inscription.annee);
-      fprintf( writefile, " %02u/%02d/%04u |", studntlist->etud_info.graduation_date.jour, studntlist->etud_info.graduation_date.mois, studntlist->etud_info.graduation_date.annee);
-      fprintf( writefile, " %s |", studntlist->etud_info.academic_email);
-      for(i = 0; i<7; i++){
-         fprintf( writefile, " %s |", studntlist->etud_info.modules[i].module_name);
-         fprintf( writefile, " %.4f |", studntlist->etud_info.modules[i].module_note);
-      }
-      fprintf( writefile, " %.4f |\n", studntlist->etud_info.moy);
-      fdraw_line(writefile, tabw);
-      studntlist = studntlist->suiv; n++;
+
+        fprintf(writefile, "%d,", n);
+
+        fprintf(writefile, "%07d,", studntlist->etud_info.apogee);
+
+        fprintf(writefile, "%s,%s,",studntlist->etud_info.nom,studntlist->etud_info.prenom);
+
+        if(studntlist->etud_info.genre == 1)
+            fprintf(writefile, "Femme,");
+        else
+            fprintf(writefile, "Homme,");
+
+        switch(studntlist->etud_info.filiere){
+            case 1:
+                fprintf(writefile, "SMI,");
+                break;
+            case 2:
+                fprintf(writefile, "SMA,");
+                break;
+            case 3:
+                fprintf(writefile, "SMP,");
+                break;
+            case 4:
+                fprintf(writefile, "SMC,");
+                break;
+            case 5:
+                fprintf(writefile, "SVI,");
+                break;
+            case 6:
+                fprintf(writefile, "STU,");
+                break;
+        }
+
+        fprintf(writefile, "%02u/%02d/%04u,",studntlist->etud_info.date_inscription.jour,(int)studntlist->etud_info.date_inscription.mois,studntlist->etud_info.date_inscription.annee);
+
+        fprintf(writefile, "%02u/%02d/%04u,",studntlist->etud_info.graduation_date.jour,(int)studntlist->etud_info.graduation_date.mois,studntlist->etud_info.graduation_date.annee);
+
+        fprintf(writefile, "%s,", studntlist->etud_info.academic_email);
+
+        for(int i=0; i<7; i++){
+            fprintf(writefile, "%s,%.4f,", studntlist->etud_info.modules[i].module_name, studntlist->etud_info.modules[i].module_note);
+    
+        }
+        fprintf(writefile, "%.04f\n", studntlist->etud_info.moy);
+
+
+        studntlist = studntlist->suiv; n++;
    }
    entryls = n;
 }
 
 void create(char *filename, etudiant *studntlist){
+    etudiant *p = studntlist;
     char name[strlen(filename) + 5];
-    snprintf( name, sizeof(name), "%s.txt", filename);
+    snprintf( name, sizeof(name), "%s.csv", filename);
 
     FILE *file = fopen(name, "w+");
     if (file != NULL){
-        write_to_file(file, studntlist);
+        write_to_file(file, p);
     }
     else{
         printf("ERREUR ! Impossible d'ouvrir %s !\n", name);
@@ -83,93 +92,94 @@ void create(char *filename, etudiant *studntlist){
     fclose(file);
 }
 
-void readfile(char *filename, boolean echototerm, etudiant *list, boolean import){
-    char name[strlen(filename) + 5], line[MAX_SIZE] = "";
-    snprintf( name, sizeof(name), "%s.txt", filename);
-    etudiant *new_etudiant= (etudiant *) malloc(sizeof(etudiant));
-    etudiant *p = new_etudiant;
+void readfile(char *filename, int echototerm, etudiant **out) {
+    char name[strlen(filename) + 5], line[MAX_SIZE];
+    snprintf(name, sizeof(name), "%s.csv", filename);
 
-    entryls = 0;
+    int n=1;
+
     FILE *file = fopen(name, "r");
-    if(file != NULL){
-        while(fgets(line, MAX_SIZE, file) != NULL){
-            if(echototerm) printf("%s", line);
-            if((!(entryls % 2)) && entryls != 0 && import){
-                fscanf(file, "| %d |    %d    |      %s      |      %s      |  %d  | %d | %u/%d/%u | %u/%d/%u |     %s     |    %s    | %f |   %s   | %f |   %s    | %f |    %s   | %f |  %s   | %f |    %s    | %f |    %s    | %f | %f |\n"
-                , &entryls //Dirty fix
-                , &new_etudiant->etud_info.apogee, new_etudiant->etud_info.nom, new_etudiant->etud_info.prenom, (int *)&new_etudiant->etud_info.genre, (int *)&new_etudiant->etud_info.filiere
-                , &new_etudiant->etud_info.date_inscription.jour, (int *)&new_etudiant->etud_info.date_inscription.mois, &new_etudiant->etud_info.date_inscription.annee
-                , &new_etudiant->etud_info.graduation_date.jour, (int *)&new_etudiant->etud_info.graduation_date.mois, &new_etudiant->etud_info.graduation_date.annee
-                , new_etudiant->etud_info.academic_email
-                , new_etudiant->etud_info.modules[0].module_name,&new_etudiant->etud_info.modules[0].module_note
-                , new_etudiant->etud_info.modules[1].module_name,&new_etudiant->etud_info.modules[1].module_note
-                , new_etudiant->etud_info.modules[2].module_name,&new_etudiant->etud_info.modules[2].module_note
-                , new_etudiant->etud_info.modules[3].module_name,&new_etudiant->etud_info.modules[3].module_note
-                , new_etudiant->etud_info.modules[4].module_name,&new_etudiant->etud_info.modules[4].module_note
-                , new_etudiant->etud_info.modules[5].module_name,&new_etudiant->etud_info.modules[5].module_note
-                , new_etudiant->etud_info.modules[6].module_name,&new_etudiant->etud_info.modules[6].module_note
-                , &new_etudiant->etud_info.moy);
+    if (file != NULL){
 
-                for(int i = 0; i<7; i++){
-                    if(!strncmp(new_etudiant->etud_info.modules[i].module_name, "NaN", 3)){
-                        new_etudiant->etud_info.moy = i; break;
-                    }
-                }
+        fgets(line, sizeof(line), file);
 
-                new_etudiant->suiv = (etudiant *) malloc(sizeof(etudiant));
-                new_etudiant = new_etudiant->suiv;
+        etudiant *list = NULL;
+        while (fgets(line, sizeof(line), file) != NULL){
+            etudiant *new_etudiant = (etudiant *) malloc(sizeof(etudiant));
+            strtok(line, ","); // Skip N
+            
+            sscanf(strtok(NULL, ","), "%d,", &new_etudiant->etud_info.apogee);
+            sscanf(strtok(NULL, ","), "%s,", new_etudiant->etud_info.nom);
+            sscanf(strtok(NULL, ","), "%s,", new_etudiant->etud_info.prenom);
+            char genre[6];
+            sscanf(strtok(NULL, ","), "%s,", genre);
+            if (strcmp(genre, "Femme") == 0) {
+                new_etudiant->etud_info.genre = 1;
+            } else if (strcmp(genre, "Homme") == 0) {
+                new_etudiant->etud_info.genre = 2;
             }
-            entryls++;
+            char filiere[4];
+            sscanf(strtok(NULL, ","), "%s,", filiere);
+            if (strcmp(filiere, "SMI") == 0) {
+                new_etudiant->etud_info.filiere = 1;
+            } else if (strcmp(filiere, "SMA") == 0) {
+                new_etudiant->etud_info.filiere = 2;
+            } else if (strcmp(filiere, "SMP") == 0) {
+                new_etudiant->etud_info.filiere = 3;
+            } else if (strcmp(filiere, "SMC") == 0) {
+                new_etudiant->etud_info.filiere = 4;
+            } else if (strcmp(filiere, "SVI") == 0) {
+                new_etudiant->etud_info.filiere = 5;
+            } else if (strcmp(filiere, "STU") == 0) {
+                new_etudiant->etud_info.filiere = 6;
+            }
+            sscanf(strtok(NULL, ","), "%2u/%2u/%4u,", &new_etudiant->etud_info.date_inscription.jour,
+                                                    &new_etudiant->etud_info.date_inscription.mois,
+                                                    &new_etudiant->etud_info.date_inscription.annee);
+            sscanf(strtok(NULL, ","), "%2u/%2u/%4u,", &new_etudiant->etud_info.graduation_date.jour,
+                                                    &new_etudiant->etud_info.graduation_date.mois,
+                                                    &new_etudiant->etud_info.graduation_date.annee);
+            sscanf(strtok(NULL, ","), "%s,", new_etudiant->etud_info.academic_email);
+            for (int i = 0; i < 7; i++) {
+                sscanf(strtok(NULL, ","), "%s,", new_etudiant->etud_info.modules[i].module_name);
+                sscanf(strtok(NULL, ","), "%f,", &new_etudiant->etud_info.modules[i].module_note);
+            }
+            sscanf(strtok(NULL, ","), "%f", &new_etudiant->etud_info.moy);
+            
+            new_etudiant->suiv = NULL;
+
+            if(list == NULL){
+                list = new_etudiant;
+            }
+            else{
+                etudiant *p = list;
+                while (p->suiv != NULL) {
+                    p = p->suiv;
+                }
+                p->suiv = new_etudiant;
+            }
+
+            n++;
         }
-        if(import){
-            *list = *p;
-            free(new_etudiant);
+
+        if(echototerm){
+            draw_table(list);
         }
+
+        entryls = n-1;
+
         fclose(file);
+
+        *out = list;
     }
 }
 
+
+
 void modfile(char *filename, etudiant *studntlist){
-    readfile(filename, 0, NULL, 0);
-
-    etudiant *tmplist = studntlist;
-    char name[strlen(filename) + 5], line[MAX_SIZE] = "";
-    unsigned int nums_to_del[entryls], tmp,i = 0;
-    snprintf( name, sizeof(name), "%s.txt", filename);
-    rename(name, "tmpbackup.txt");
-
-    FILE *file = fopen(name, "w+");
-    if(file != NULL){
-        nums_to_del[0] = 0; //INIT for check
-        do{
-            do{
-                printf("Entrez ligne a modifier (0 pour continuer): "); scanf("%u", &tmp);
-            } while(tmp>entryls);
-            if(tmp) {
-                    nums_to_del[i] = tmp;
-                    ++i;
-            }
-        } while(tmp);
-
-        tmp=0;
-        i=0;
-        while(fgets(line, MAX_SIZE, file) != NULL){
-            if(tmp != nums_to_del[i]*2){
-                studntlist = studntlist->suiv;
-            }
-            else{
-                modifier_etudiant(&studntlist->etud_info);
-                studntlist = studntlist->suiv;
-                i++;
-            }
-            tmp++;
-        }
-
-        write_to_file(file, tmplist);
-    }
-    else{
-        printf("ERREUR! Impossible d'ouvrir %s !\n", name);
-    }
-
-    fclose(file);
+    int apo;
+    printf("Numero Apogee d'etudiant : ");
+    scanf("%d", &apo);
+    studntlist = modifier_etud_info(studntlist, (int)apo);
+    create(filename, studntlist);
 }

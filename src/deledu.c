@@ -1,23 +1,36 @@
+//
+//  GRAOUI ABDERRAHMANE - 2023152
+//  
+//  EL AMLI Naima - 1717283
+//
+//  EDUMAN
+//
 #include <stdio.h>
 #include <stdlib.h>
 #include "eduStruct.h"
 #include "srchfuncs.h"
 
-void delete_etud(etudiant* debut , int apog){
-    etudiant *temp = searchoneByApo(debut,apog) ;
-    etudiant *Q, *p=debut;
+void delete_etud(etudiant **debut , int apog){
+    etudiant *tmp = *debut, *p = tmp;
 
-    if(temp == NULL){
-        printf(" \n Il n'existe pas d'eutudiant correspondant à ce numero d'apogee \n");
-    }
-    else{
-        while(p != NULL){
-            Q=p;
-            p=p->suiv ;
-            if(temp == p){
-                Q->suiv = p->suiv ;
-                free(p);
+    if(tmp->etud_info.apogee == apog){
+            if(tmp->suiv) *debut = tmp->suiv;
+            else *debut = NULL;
+            free(tmp);
+    } 
+    else {
+        do{
+            if(tmp->suiv->etud_info.apogee == apog){
+                p = tmp;
+                tmp = tmp->suiv;
+                if(tmp->suiv) p->suiv = tmp->suiv;
+                else p->suiv = NULL;
+                free(tmp);
+                break;
             }
-        }
+
+            tmp = tmp->suiv;
+
+        } while(tmp);
     }
 }
