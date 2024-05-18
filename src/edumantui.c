@@ -223,7 +223,7 @@ e_filiere filselect(){
 
 int modselect(){
    int out;
-   /*do{
+   do{
       puts(
          "     *******************************************************************************************         \n"
          "     **                                 Modification                                          **         \n"
@@ -235,8 +235,26 @@ int modselect(){
          "     *******************************************************************************************         \n"
       );
       printf("Votre choix : "); scanf("%d", &out);
-   } while(out > 2 || out <= 0);*/
-   //TODO : Ajout, this doesn't work, must be fixed
-   out = 1;
+   } while(out > 2 || out <= 0);
+   return out;
+}
+
+int modulemodselect(){
+   int out;
+   do{
+      puts(
+         "     *******************************************************************************************         \n"
+         "     **                                     Tri                                               **         \n"
+         "     **                            Choisir votre operation :                                  **         \n"
+         "     **                                                                                       **         \n"
+         "     **          1- Supprimer un Module                                                       **         \n"
+         "     **          2- Ajouter un Module                                                         **         \n"
+         "     **          3- Modifier un Module                                                        **         \n"
+         "     **                                                                                       **         \n"
+         "     *******************************************************************************************         \n"
+      );
+      printf("Votre choix : "); scanf("%d", &out);
+   } while(out > 3 || out <= 0);
+
    return out;
 }

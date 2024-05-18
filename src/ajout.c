@@ -27,12 +27,27 @@ date saisir_date(void){
     return temp;
 }
 
-int generate_apogee(int an){
-    int temp = (an % 100) * 51340 ;
-    srand(time(NULL));
+int generate_apogee(){ //Generates random Apogee 7 numbers long
+    int uid = rand() % 9 +1;
 
-    temp += (rand() % (10) )*10000 + (rand() % (10))*1000 + (rand() % (10))*100 + (rand() % (10))*10 + rand() % (10) ;
-    return temp ;
+    for(int i = 1; i < 7; ++i){
+        uid = uid * 10 + (rand() % 10);
+    }
+
+    return uid;
+}
+
+int estUnique(int apogee, etudiant *debut){ //Verifies generated code is unique, O(n) Time complexity
+    etudiant *p = debut;
+    while(p != NULL){
+        if(p->etud_info.apogee == apogee){
+            return 0;
+        }
+
+        p = p->suiv;
+    }
+
+    return 1;
 }
 
 void generate_academic_email(etudiant_info * etud){
@@ -62,17 +77,17 @@ void calc_moy(etudiant_info *etud){
 void ajout_etudiant_info(etudiant_info *etud){
     etudiant_info *p = etud;
     int isValid=0 ;
-    printf("Veuillez saisir le nom et prenom : \n ");
+    printf("Veuillez saisir le nom et prenom : \n > ");
     scanf("%s %s",etud->nom, etud->prenom);
     while(isValid == 0){
-        printf("Veuillez saisir le genre :  1 = Femme , 2 = Homme : \n ");
+        printf("Veuillez saisir le genre :  1 = Femme , 2 = Homme : \n > ");
         scanf("%d",(int *)&etud->genre);
         switch(etud->genre){
         case F : isValid = 1 ;
         break;
         case H : isValid = 1 ;
         break;
-        default  : printf("Error: invalide : \n");
+        default  : printf("Error: invalide\n");
                 isValid = 0 ;
 
         }
@@ -94,24 +109,23 @@ void ajout_etudiant_info(etudiant_info *etud){
         break;
         case STU : isValid = 1 ;
         break;
-        default  : printf("Error: invalide : \n");
+        default  : printf("Error: invalide\n");
         isValid = 0  ;
     }
     }
-    printf("Veuillez saisir la date d'inscription (format DD/MM/YYYY): \n ");
+    printf("Veuillez saisir la date d'inscription (format DD/MM/YYYY): \n > ");
     etud->date_inscription=saisir_date();
     etud->graduation_date=etud->date_inscription;
     etud->graduation_date.annee = etud->date_inscription.annee + 3 ;
-    etud->apogee = generate_apogee(etud->date_inscription.annee) ;
     generate_academic_email(p);
 
     isValid = 0 ;
     while(isValid == 0 ){
-        printf("Veuillez entrer le nombre de modules : \n  ");
+        printf("Veuillez entrer le nombre de modules : \n > ");
         scanf("%d",&etud->num_of_modules);
         
         if(etud->num_of_modules<= 0 || etud->num_of_modules > 7){
-            printf("Error: le nombre de modules par semestre ne doit pas depasser 7\n");
+            printf("Erreur: le nombre de modules par semestre ne doit pas depasser 7 !\n");
             isValid = 0;
         }
         else{
@@ -119,15 +133,15 @@ void ajout_etudiant_info(etudiant_info *etud){
         }
     }
 
-    printf("Veuillez entrer les informations de chaque module : \n");
+    printf("Veuillez entrer les informations de chaque module : \n > ");
     for(int i=0 ; i<etud->num_of_modules ; i++){
-        printf("Veuillez saisir le nom du module %d: \n " ,i+1);
+        printf("Veuillez saisir le nom du module %d: \n > " ,i+1);
         scanf("%s",etud->modules[i].module_name);
         
 
         isValid = 0;
         while(isValid == 0){
-            printf("Veuillez saisir la note du module %s : \n ", etud->modules[i].module_name);
+            printf("Veuillez saisir la note du module %s : \n > ", etud->modules[i].module_name);
             scanf("%f",&etud->modules[i].module_note);
             
             if(etud->modules[i].module_note <0 || etud->modules[i].module_note >20){
@@ -146,7 +160,7 @@ void ajout_etudiant_info(etudiant_info *etud){
     }
 
     calc_moy(etud);
-    printf("\nEtudiant ajoute avec succes. \n ");
+    printf("\nEtudiant ajoute avec succes.\n ");
 
 }
 
@@ -158,6 +172,11 @@ void ajout(etudiant **debut){
         exit(EXIT_FAILURE);
     }
 
+    etudiant *p = *debut;
+    do {
+        new_etudiant->etud_info.apogee = generate_apogee();
+    } while(!estUnique(new_etudiant->etud_info.apogee, p));
+
     ajout_etudiant_info(&new_etudiant->etud_info);
     new_etudiant->suiv = NULL;
 
@@ -165,7 +184,7 @@ void ajout(etudiant **debut){
         *debut = new_etudiant;
     }
     else{    
-        etudiant *p = *debut;
+        p = *debut;
         while (p->suiv != NULL) {
             p = p->suiv;
         }
@@ -180,12 +199,21 @@ void ajout_fin(etudiant **debut){
         exit(EXIT_FAILURE);
     }
 
+    etudiant *head = *debut;
+    do {
+        new_etudiant->etud_info.apogee = generate_apogee();
+    } while(!estUnique(new_etudiant->etud_info.apogee, head));
+
     ajout_etudiant_info(&new_etudiant->etud_info);
     new_etudiant->suiv = NULL;
-    etudiant *head = *debut;
+    
+    if(*debut == NULL){
+        *debut = new_etudiant;
 
-    while(head->suiv != NULL){
-        head=head->suiv;
+    } else {
+        while(head->suiv != NULL){
+            head=head->suiv;
+        }
+        head->suiv=new_etudiant;
     }
-    head->suiv=new_etudiant;
 }

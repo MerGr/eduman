@@ -9,7 +9,7 @@
 
 extern date saisir_date(void);
 
-extern int generate_apogee(int );
+extern int generate_apogee(void);
 
 extern void generate_academic_email(etudiant_info *);
 

@@ -146,7 +146,7 @@ int main(){
                            scanf("%d", &apo);
                            student_list = modifier_etud_info(student_list, (int)apo);
                            break;
-                        case 5:
+                        case 2:
                            do{
                               printf("Nombre d'etudiants : ");
                               scanf("%d", &edunum);
@@ -339,13 +339,13 @@ int main(){
                         case 1: //Modifier
                            modfile("list", student_list);
                            break;
-                        case 5: //Ajouter
+                        case 2: //Ajouter
                            do{
                               printf("Nombre d'etudiants : ");
                               scanf("%d", &edunum);
                            } while(edunum < 0);
                            for(int i=0; i<edunum; i++)
-                                 ajout(&student_list);
+                                 ajout_fin(&student_list);
                            create("list", student_list);
                            printf("list.csv cree avec succes!\n");
                         }

@@ -21,4 +21,5 @@ extern int searchselect();
 extern int sortselect();
 extern int viewselect();
 extern int modselect();
+extern int modulemodselect();
 extern e_filiere filselect();
