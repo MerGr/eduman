@@ -16,11 +16,11 @@
 date saisir_date(void){
     int days[]={31,29,31,30,31,30,31,31,30,31,30,31};
     date temp;
-    scanf("%u/%d/%u", &temp.jour, (int *) &temp.mois, &temp.annee);
+    while (scanf("%u/%d/%u", &temp.jour, (int *) &temp.mois, &temp.annee) != 3);
     //LEAP YEAR
     if(temp.annee % 4) days[1] = 28;
     else days[1] = 29;
-    while (temp.jour > days[temp.mois -1]){
+    if (temp.jour > days[temp.mois -1]){
         printf("ERREUR ! Date invalide\n");
 
     }
@@ -58,7 +58,7 @@ void generate_academic_email(etudiant_info * etud){
     strcat(email ,temp1);
     strcat(email , etud->nom);
     int temp = etud->apogee % 1000 ;
-    char temp_string[5] ;
+    char temp_string[10] ;
     snprintf(temp_string, 10, "%d", temp);
     strcat(email , temp_string);
     strcat(email ,"@eduman.edu");
@@ -166,7 +166,7 @@ void ajout_etudiant_info(etudiant_info *etud){
 
 //ajout
 void ajout(etudiant **debut){
-    etudiant *new_etudiant = (etudiant *)malloc(sizeof(etudiant));
+    etudiant *new_etudiant = (etudiant *) calloc(1, sizeof(etudiant));
     if (new_etudiant == NULL) {
         fprintf(stderr, "Erreur d'allocation de mémoire.\n");
         exit(EXIT_FAILURE);

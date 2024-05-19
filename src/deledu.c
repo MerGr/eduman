@@ -20,7 +20,7 @@ void delete_etud(etudiant **debut , int apog){
     } 
     else {
         do{
-            if(tmp->suiv->etud_info.apogee == apog){
+            if(tmp->suiv && tmp->suiv->etud_info.apogee == apog){
                 p = tmp;
                 tmp = tmp->suiv;
                 if(tmp->suiv) p->suiv = tmp->suiv;

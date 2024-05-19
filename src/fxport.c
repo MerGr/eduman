@@ -81,7 +81,7 @@ void create(char *filename, etudiant *studntlist){
     char name[strlen(filename) + 5];
     snprintf( name, sizeof(name), "%s.csv", filename);
 
-    FILE *file = fopen(name, "w+");
+    FILE *file = fopen(name, "w");
     if (file != NULL){
         write_to_file(file, p);
     }
@@ -162,7 +162,7 @@ void readfile(char *filename, int echototerm, etudiant **out) {
             n++;
         }
 
-        if(echototerm){
+        if(echototerm && list){
             draw_table(list);
         }
 
