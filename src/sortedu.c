@@ -73,7 +73,6 @@ etudiant *sort_apogee(etudiant *debut){
     return merge(sort_apogee(debut), sort_apogee(right), 1);
 }
 
-//ordre decroissant
 etudiant *sort_moy(etudiant* debut ){
     if (debut == NULL || debut->suiv == NULL)
         return debut;
@@ -92,7 +91,6 @@ etudiant *sort_moy(etudiant* debut ){
     return merge(sort_moy(debut), sort_moy(right), 2);
 }
 
-//ordre decroissant
 etudiant *sort_date_inscription(etudiant* debut ){
     if (debut == NULL || debut->suiv == NULL)
         return debut;
