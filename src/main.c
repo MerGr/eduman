@@ -180,7 +180,6 @@ int main(){
                if(mainlistfile == NULL) {
                   option[1] = 1;
                   printf("Fichier list.csv introuvable ! Veuillez creer une base de donnees !\n");
-                  fclose(mainlistfile);
                }
                else {
                   fclose(mainlistfile);
